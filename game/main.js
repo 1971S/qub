@@ -55,34 +55,29 @@ let currentScene;
 
 function setup () {
 
-  const sceneMenu = new Container();
-  sceneMenu.tag = 'menu';
-  Stage.addChild(sceneMenu);
-  Scenes[sceneMenu.tag] = sceneMenu;
-
-  const sceneAction = new Container();
-  sceneAction.tag = 'action';
-  Stage.addChild(sceneAction);
-  Scenes[sceneAction.tag] = sceneAction;
-  sceneAction.visible = false;
+  createScene('premenu');
+  createScene('menu');
+  createScene('action');
+  Scenes['action'].visible = false;
   
   player = new Sprite(Resources['assets/cat.png'].texture);
   player.x = 300;
   player.y = 300;
   player.vx = 0;
   player.vy = 0;
-  sceneAction.addChild(player);
+
+  Scenes['action'].addChild(player);
   
-  app.state = start;
+  app.state = menu;
   app.ticker.add(delta => gameLoop(delta));
 }
 
 function gameLoop (delta) {
   gp = navigator.getGamepads();
-  app.state(delta);
+  app.state(menu);
 }
 
-function start (delta) {
+function menu (delta) {
   app.stats.begin();
 
   if (initialized) {
@@ -92,8 +87,6 @@ function start (delta) {
   } else {
     if (gp[0] && gp[0].buttons[0].pressed === true) {
       updateScene('play');
-      // console.log('hey');
-      // console.log(gamepads);
     } 
   }
 
@@ -126,5 +119,8 @@ function updateScene (targetScene) {
 }
 
 function createScene (tag) {
-
+  const scene = new Container();
+  scene.tag = tag;
+  Stage.addChild(scene);
+  Scenes[scene.tag] = scene;
 }
