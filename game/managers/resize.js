@@ -1,7 +1,9 @@
-export class Resizer {
+// hay que hacer lo de que mantenga el tamaño correcto, right?
+export class ResizeManager {
 
   constructor (app) {
     this.app = app;
+    // this.init();
   }
 
   init () {
