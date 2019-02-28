@@ -1,18 +1,23 @@
+// initialize the PIXI app
 const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundColor: 0x2c3e50,
-  resizeTo: document,
-  autoDensity: true,
-  resolution: devicePixelRatio
 });
 
+// eventlistener for gamepad connection, pre-step for the gamepad integration. needs gamepaddisconnect too
 window.addEventListener("gamepadconnected", function(e) {
   console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-      e.gamepad.index, e.gamepad.id,
-      e.gamepad.buttons.length, e.gamepad.axes.length);
-  }
-);
+  e.gamepad.index, e.gamepad.id,
+  e.gamepad.buttons.length, e.gamepad.axes.length);
+});
+
+// event and function for resizing the window, fullscreen or not
+window.addEventListener('resize', resize);
+
+function resize() {
+  app.renderer.resize(window.innerWidth, window.innerHeight);
+}
 
 function handleKeypress(event) {
   if (event.keyCode === 13) {
@@ -20,15 +25,14 @@ function handleKeypress(event) {
   }
 }
 
-
+// function to go in and out of fullscreen
 function toggleFullscreen() {
-  let elem = document.querySelector("body");
+  let e = document.getElementById("body");
 
-  elem.requestFullscreen = elem.requestFullscreen || elem.mozRequestFullscreen
-          || elem.msRequestFullscreen || elem.webkitRequestFullscreen;
+  e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
 
   if (!document.fullscreenElement) {
-    elem.requestFullscreen().then({}).catch(err => {
+    e.requestFullscreen().then({}).catch(err => {
       console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
     });
   } else {
@@ -39,20 +43,17 @@ function toggleFullscreen() {
 }
 
 window.onload = () => {
-
   window.addEventListener('keypress', handleKeypress, false)
-  
-  app.resources = {};
+
   app.state = play;
   app.stats = new Stats();
-  
+
   const domElement = document.getElementById('body');
   app.stats.domElement.id = "stats";
   domElement.append(app.stats.domElement);
-  
   window.body.appendChild(app.view);
-  app.ticker.add(delta => gameLoop(delta));
 
+  app.ticker.add(delta => gameLoop(delta));
 }
 
 function gameLoop (delta) {
