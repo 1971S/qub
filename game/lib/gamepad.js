@@ -15,4 +15,5 @@ export class GamepadController {
       console.log(navigator.getGamepads()); //eslint-disable-line
     });
   }
+  
 }
