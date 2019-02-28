@@ -1,0 +1,22 @@
+{
+  "name": "solo-project-qub",
+  "version": "1.0.0",
+  "description": "A platforming game created with pixi.js",
+  "main": "index.js",
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jgp1971/qub.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jgp1971/qub/issues"
+  },
+  "homepage": "https://github.com/jgp1971/qub#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1"
+  }
+}

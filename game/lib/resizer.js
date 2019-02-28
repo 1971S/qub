@@ -13,13 +13,13 @@ export class Resizer {
   }
 
   toggleFullscreen () {
-    let e = document.getElementById("body");
+    let e = document.getElementById('body');
   
     e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
   
     if (!document.fullscreenElement) {
       e.requestFullscreen().then({}).catch(err => {
-        console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+        console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);  //eslint-disable-line
       });
     } else {
       if (document.exitFullscreen) {
