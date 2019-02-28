@@ -1,59 +1,46 @@
-// initialize the PIXI app
+import { GamepadController } from './lib/gamepad.js';
+import { Resizer } from './lib/resizer.js';
+
 const app = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundColor: 0x2c3e50,
 });
 
-// eventlistener for gamepad connection, pre-step for the gamepad integration. needs gamepaddisconnect too
-window.addEventListener("gamepadconnected", function(e) {
-  console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.",
-  e.gamepad.index, e.gamepad.id,
-  e.gamepad.buttons.length, e.gamepad.axes.length);
-});
+const controller = new GamepadController(app);
+controller.init();
 
-// event and function for resizing the window, fullscreen or not
-window.addEventListener('resize', resize);
+const resizer = new Resizer(app);
+resizer.init();
 
-function resize() {
-  app.renderer.resize(window.innerWidth, window.innerHeight);
-}
+const aStage = app.stage;
+const aView = app.view;
+const aRender = app.renderer;
 
-function handleKeypress(event) {
-  if (event.keyCode === 13) {
-    toggleFullscreen();
-  }
-}
-
-// function to go in and out of fullscreen
-function toggleFullscreen() {
-  let e = document.getElementById("body");
-
-  e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
-
-  if (!document.fullscreenElement) {
-    e.requestFullscreen().then({}).catch(err => {
-      console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-    });
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
-  }
-}
+// esto hay que hacerlo auto si queremos al empezar
+// function handleKeypress(event) {
+//   if (event.keyCode === 13) {
+//     resizer.toggleFullscreen();
+//   }
+// }
 
 window.onload = () => {
-  window.addEventListener('keypress', handleKeypress, false)
+  // window.addEventListener('keypress', handleKeypress, false)
 
   app.state = play;
-  app.stats = new Stats();
-
+  
   const domElement = document.getElementById('body');
+
+  app.stats = new Stats();
   app.stats.domElement.id = "stats";
   domElement.append(app.stats.domElement);
-  window.body.appendChild(app.view);
 
+  window.body.appendChild(app.view);
   app.ticker.add(delta => gameLoop(delta));
+}
+
+function setup () {
+
 }
 
 function gameLoop (delta) {
@@ -63,4 +50,8 @@ function gameLoop (delta) {
 function play (delta) {
   app.stats.begin();
   app.stats.end();
+}
+
+function end () {
+
 }
