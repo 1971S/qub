@@ -1,58 +1,116 @@
 // Make it an input manager
-// Change how it works to have the cache, the current, and all the functions (pressed, hold. released, isAxis, quizás wasAxis para comparar lo de antes con lo de ahora?)
-
 export class GamepadManager {
 
   constructor () {
-    this.gp = navigator.getGamepads()[0];
     this.buttonsCache = {};
-    this.buttonsCurr = {};
+    this.buttonsStatus = {};
+    this.axesCache = {};
+    this.axesStatus = {};
+    this.gp = navigator.getGamepads()[0];
     this.init();
-    this.updateBindings();
+    this.setBindings();
   }
 
   init () {
     window.addEventListener('gamepadconnected', (e) => {
-      this.updateBindings();
-      // console.log(navigator.getGamepads()); //eslint-disable-line
+      console.log(navigator.getGamepads()); //eslint-disable-line
     });
 
     window.addEventListener('gamepaddisconnected', (e) => {
-      this.updateBindings();
-      // console.log(navigator.getGamepads()); //eslint-disable-line
+      console.log(navigator.getGamepads()); //eslint-disable-line
     });
   }
 
-  pollGamepads () {
-    // this.gp = navigator.getGamepads()[0];
-    // this.buttonsCache = this.buttonsCurr;
-    // this.buttonsCurr = gp.buttons.filter(button => {
-    //   if (button.value > 0) {
-    //     this.buttonsCurr[button] = button.value;
-    //   }
-    // });
-    return navigator.getGamepads()[0];
+  setBindings () {
+    this.A = 0;
+    this.B = 1;
+    this.X = 2;
+    this.Y = 3;
+    this.LeftTrigger = 4;
+    this.RightTrigger = 5;
+    this.LeftBumper = 6;
+    this.RightBumper = 7;
+    this.Select = 8;
+    this.Start = 9;
+    this.LeftJTButton = 10;
+    this.RightJTButton = 11;
+    this.DUp = 12;
+    this.DDown = 13;
+    this.DLeft = 14;
+    this.DRight = 14;
+    this.XBOXButton = 15;
+
+    this.LeftX = 0;
+    this.LeftY = 1;
+    this.RightX = 2;
+    this.RightY = 3;
   }
 
-  updateBindings () {
+  update () {
+    this.gp = navigator.getGamepads()[0];
 
-    if (this.gp) {
-      this.gp = navigator.getGamepads()[0];
-      this.A = this.gp.buttons[0];
-      this.B = this.gp.buttons[1];
-      this.X = this.gp.buttons[2];
-      this.Y = this.gp.buttons[3];
-      this.Select = this.gp.buttons[8];
-      this.Start = this.gp.buttons[9];
-      this.LeftX = this.gp.axes[0];
-      this.LeftY = this.gp.axes[1];
-      this.RightX = this.gp.axes[2];
-      this.RightY = this.gp.axes[3];
+    this.buttonsCache = this.buttonsStatus;
+    this.buttonsStatus = {};
+
+    for (let i = 0; i < this.gp.buttons.length; i++) {
+      if (this.gp.buttons[i].value > 0) {
+        this.buttonsStatus[i] = this.gp.buttons[i].value;
+      }
     }
-    // console.log(this);
+
+    this.axesCache = this.axesStatus;
+    this.axesStatus = {};
+
+    for (let i = 0; i < this.gp.axes.length; i++) {
+      if (this.gp.axes[i] !== 0) {
+        this.axesStatus[i] = this.gp.axes[i];
+      }
+    }
   }
 
-  isPressed (button) {
-    // if (button)
+  onPressed (buttonString) {
+    if (!this.gp) return false;
+    const target = this[buttonString];
+    if (!this.buttonsCache[target] && this.buttonsStatus[target]) {
+      return {
+        result: true,
+        value: this.buttonsStatus[target],
+      };
+    } else return false;
   }
+
+  onHold (buttonString) {
+    if (!this.gp) return false;
+    const target = this[buttonString];
+    if (this.buttonsCache[target] && this.buttonsStatus[target]) {
+      return {
+        result: true,
+        value: this.buttonsStatus[target],
+      };
+    } else return false;
+  }
+
+  onRelease (buttonString) {
+    if (!this.gp) return false;
+    const target = this[buttonString];
+    if (this.buttonsCache[target] && !this.buttonsStatus[target]) {
+      return {
+        result: true,
+        value: 0,
+      };
+    } else return false;
+  }
+
+  axis (axisString) {
+    if (!this.gp) return false;
+    const target = this[axisString];
+    if (this.axesStatus[target]) {
+      return {
+        oValue: this.axesStatus[target],
+        aValue: Math.abs(this.axesStatus[target]),
+        diff: this.axesCache[target] ? this.axesStatus[target] - this.axesCache[target] : this.axesStatus[target]
+      };
+    } else return false;
+  }
+
 }

@@ -104,7 +104,7 @@ function gameLoop (delta) {
   }
 
   // Should be Input.pollState, to poll whatever type of input is decided (keyboard or gP)
-  Director.managers.Gamepad.updateBindings();
+  Director.managers.Gamepad.update();
 
   // Call the function set as app.state with delta as interval
   Director[app.state](delta);
