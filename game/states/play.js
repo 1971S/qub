@@ -1,7 +1,7 @@
-export function play (delta, app, m) {
+export function play (delta, app, managers) {
 
   // Save as cScene the current scene enabled, and establishes business logic in each case
-  const { Gamepad, Resizer, Collider, Scener } = m;
+  const { Gamepad, Resizer, Collider, Scener } = managers;
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
 

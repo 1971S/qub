@@ -13,17 +13,18 @@ import { ResizeManager } from './managers/resize.js';
 import { GamepadManager } from './managers/Gamepad.js';
 import { CollisionManager } from './managers/collision.js';
 
+// Import the two directors: state director and scene director
 import { SceneDirector } from './scenes/_scene-director.js';
 import { StateDirector } from './states/_state-director.js';
 
-// Initialize the PIXI App, with a variety of settings
+// Initialize the PIXI App, with the desired settings
 const app = new App({
   width: window.innerWidth,
   height: window.innerHeight,
   backgroundColor: 0x2c3e50,
 });
 
-// Instantiate the state director, passing in new managers and scene director
+// Instantiate the state director, passing in new managers and the scene director
 const Scener = new SceneDirector(app);
 const Director = new StateDirector(app, {
   Gamepad: new GamepadManager(), // Gamepad should be 'input', and send whatever input is chosen
@@ -40,7 +41,7 @@ const View = app.view;
 const Renderer = app.renderer;
 const Ticker = app.ticker;
 
-// Initialize and append the stats helper for debugging. Comment to disable
+// Initialize and append the Stats helper for debugging. Comment to disable
 const domElement = document.getElementById('body');
 app.stats = new Stats();
 app.stats.domElement.id = 'stats';
@@ -61,7 +62,7 @@ Loader
 // Setup is called as callback when the loader finishes loading all the textures
 function setup () {
 
-  // Call createScene for each scene that we want in the game. True means that scene will be initial
+  // Call createScene for each scene that we want in the game. True binds that scene as initial
   Scener.createScene('premenu', true);
   Scener.createScene('menu');
   Scener.createScene('action');
@@ -69,7 +70,7 @@ function setup () {
   // Use createSprite to generate a new sprite with the correct position and anchor
   const logo = Scener.createSprite('assets/logo.png', 960, 540, 'center');
 
-  // Initialize the player and assign different properties that will be used later
+  // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
   const player = Scener.createSprite('assets/qub.png', 300, 100, 'center', 'player');
   player.vx = 0;
   player.vy = 0;
@@ -103,7 +104,7 @@ function gameLoop (delta) {
     app.stats.begin();
   }
 
-  // Should be Input.pollState, to poll whatever type of input is decided (keyboard or gP)
+  // Should be Input.update, to poll whatever type of input is decided (keyboard or GP)
   Director.managers.Gamepad.update();
 
   // Call the function set as app.state with delta as interval

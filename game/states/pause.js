@@ -1,6 +1,6 @@
-export function pause (delta, app, m) {
+export function pause (delta, app, managers) {
 
-  const { Gamepad, Resizer, Collider, Scener } = m;
+  const { Gamepad, Resizer, Collider, Scener } = managers;
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
 
