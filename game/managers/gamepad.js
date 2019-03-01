@@ -25,6 +25,10 @@ export class GamepadManager {
     if (navigator.getGamepads()[0]) {
       this.A = navigator.getGamepads()[0].buttons[0];
       this.B = navigator.getGamepads()[0].buttons[1];
+      this.X = navigator.getGamepads()[0].buttons[2];
+      this.Y = navigator.getGamepads()[0].buttons[3];
+      this.Select = navigator.getGamepads()[0].buttons[8];
+      this.Start = navigator.getGamepads()[0].buttons[9];
     }
   }
 }

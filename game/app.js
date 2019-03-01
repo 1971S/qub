@@ -23,18 +23,14 @@ const app = new App({
   backgroundColor: 0x2c3e50,
 });
 
-// Instantiate new managers, passing the newly created app if needed, and then instantiate the directors
-const Gamepad = new GamepadManager();
-const Collider = new CollisionManager();
-const Resizer = new ResizeManager(app);
-
+// Instantiate the state director, passing in new managers and scene director
 const Scener = new SceneDirector(app);
 const Director = new StateDirector(app, {
-  Gamepad,
-  Collider,
+  Gamepad: new GamepadManager(), // Gamepad should be 'input', and send whatever input is chosen
+  Collider: new CollisionManager(),
+  Resizer: new ResizeManager(app),
   Scener,
-  Resizer
-}); // Gamepad should be 'input', and send whatever input is chosen
+});
 
 // Aliases for app properties
 const Stage = app.stage;
