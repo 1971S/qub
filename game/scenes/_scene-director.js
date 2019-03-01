@@ -1,5 +1,5 @@
 // Think about how to instantiate the player? And move him
-export class SceneManager {
+export class SceneDirector {
 
   constructor (app) {
     this.app = app;
