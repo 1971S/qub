@@ -4,7 +4,7 @@ export function pause (delta, app, m) {
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
 
-  if (app.gp[0] && Gamepad.Select.pressed === true) {
+  if (Gamepad.gp && Gamepad.Select.pressed === true) {
     app.state = 'play';
   }
 

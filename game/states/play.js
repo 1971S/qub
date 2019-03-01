@@ -6,14 +6,14 @@ export function play (delta, app, m) {
   const Actors = app.stage.actors;
 
   if (cScene === 'premenu') {
-    if (app.gp[0] && Gamepad.A.pressed === true) {
+    if (Gamepad.gp && Gamepad.A.pressed === true) {
       Resizer.toggleFullscreen();
       Scener.changeScene('menu');
     }
   }
 
   if (cScene === 'menu') {
-    if (app.gp[0] && Gamepad.B.pressed === true) {
+    if (Gamepad.gp && Gamepad.B.pressed === true) {
       Scener.changeScene('action');
     }
   }
@@ -26,13 +26,13 @@ export function play (delta, app, m) {
       // console.log('true hit');
     }
 
-    if (app.gp[0] && Gamepad.A.pressed === true) {
+    if (Gamepad.gp && Gamepad.A.pressed === true) {
       if (Actors.player.jumps > 0) {
         Actors.player.y -= 30 * delta;
       }
     }
 
-    if (app.gp[0] && Gamepad.Start.pressed === true) {
+    if (Gamepad.gp && Gamepad.Start.pressed === true) {
       app.state = 'pause';
     }
 

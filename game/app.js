@@ -103,8 +103,8 @@ function gameLoop (delta) {
     app.stats.begin();
   }
 
-  // Poll the gamepads; should be done by the class itself, and gp be inside
-  app.gp = navigator.getGamepads();
+  // Should be Input.pollState, to poll whatever type of input is decided (keyboard or gP)
+  Director.managers.Gamepad.updateBindings();
 
   // Call the function set as app.state with delta as interval
   Director[app.state](delta);
