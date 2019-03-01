@@ -1,9 +1,9 @@
-// hay que hacer lo de que mantenga el tamaño correcto, right?
+// Need scaling
 export class ResizeManager {
 
   constructor (app) {
     this.app = app;
-    // this.init();
+    this.init();
   }
 
   init () {
@@ -16,9 +16,9 @@ export class ResizeManager {
 
   toggleFullscreen () {
     let e = document.getElementById('body');
-  
+
     e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
-  
+
     if (!document.fullscreenElement) {
       e.requestFullscreen().then({}).catch(err => {
         console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);  //eslint-disable-line
@@ -29,4 +29,5 @@ export class ResizeManager {
       }
     }
   }
+
 }

@@ -29,6 +29,7 @@
         "space-before-blocks": "error",
         "space-before-function-paren": "error",
         "no-undef": "off",
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "no-trailing-spaces": "error"
     }
 }

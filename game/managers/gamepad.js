@@ -1,4 +1,5 @@
-// convertirlo en input manager
+// Make it an input manager
+// Change how it works to have the cache, the current, and all the functions (pressed, hold. released, isAxis, quizás wasAxis para comparar lo de antes con lo de ahora?)
 
 export class GamepadManager {
 
