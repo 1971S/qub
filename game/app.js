@@ -61,46 +61,10 @@ Loader
     'assets/platform.png',
     'assets/logo.png'
   ])
-  .load(setup);
-
-// Setup is called as callback when the loader finishes loading all the textures
-function setup () {
-
-  // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
-  Scener.createScene('premenu', true);
-  Scener.createScene('menu');
-  Scener.createScene('action');
-
-  // Use createSprite to generate a new sprite with the correct position and anchor
-  Scener.createActor('menu', 'assets/logo.png', [[640, 360]], 'center');
-
-  // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
-  const player = Scener.createActor('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player');
-  player.vx = 0;
-  player.vy = 0;
-  player.gravity = 1.3;
-  player.friction = 0.9;
-  player.jumpStrength = 700;
-  player.jumps = 1;
-  player.isJumping = false;
-
-  Scener.createActor('action', 'assets/platform.png', [
-    [20, 700], [20, 450], [1100, 450], [1100, 550], [1100, 700]
-  ], 'center', 'platform');
-
-  console.log(app); //eslint-disable-line
-
-  // app.state determines the function to be executed by the director in gameLoop, enabling
-  // having different states in the director: play, pause, end, etc
-  app.state = 'play';
-
-  // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
-  Ticker.add(delta => gameLoop(delta));
-
-}
+  .load(() => Scener.setup());
 
 // gameLoop is called by the ticker with a delta; here you can manipulate the game state
-function gameLoop (delta) {
+app.gameLoop = function (delta) {
 
   // Start the execution of the stats, if they are enabled (uncommented at the start)
   if (app.stats) {
@@ -113,4 +77,4 @@ function gameLoop (delta) {
   // Call the function set as app.state with delta as interval
   GameDirector[app.state](delta);
 
-}
+};

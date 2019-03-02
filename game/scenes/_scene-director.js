@@ -5,6 +5,42 @@ export class SceneDirector {
     this.app = app;
   }
 
+  // Setup is called as callback when the loader finishes loading all the textures
+  setup () {
+
+    // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
+    this.createScene('premenu', true);
+    this.createScene('menu');
+    this.createScene('action');
+
+    // Use createSprite to generate a new sprite with the correct position and anchor
+    this.createActor('menu', 'assets/logo.png', [[640, 360]], 'center');
+
+    // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
+    const player = this.createActor('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player');
+    player.vx = 0;
+    player.vy = 0;
+    player.gravity = 1.3;
+    player.friction = 0.9;
+    player.jumpStrength = 700;
+    player.jumps = 1;
+    player.isJumping = false;
+
+    this.createActor('action', 'assets/platform.png', [
+      [20, 700], [20, 450], [1100, 450], [1100, 550], [1100, 700]
+    ], 'center', 'platform');
+
+    console.log(this.app); //eslint-disable-line
+
+    // app.state determines the function to be executed by the director in gameLoop, enabling
+    // having different states in the director: play, pause, end, etc
+    this.app.state = 'play';
+
+    // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
+    this.app.ticker.add(delta => this.app.gameLoop(delta));
+
+  }
+
   createScene (tag, visibility) {
     const scene = new PIXI.Container();
 
