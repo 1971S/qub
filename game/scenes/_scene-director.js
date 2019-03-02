@@ -1,3 +1,5 @@
+import { PlatformManager } from '../managers/platform.js';
+
 // Think about how to instantiate the player? And move him
 export class SceneDirector {
 
@@ -13,20 +15,13 @@ export class SceneDirector {
     this.createScene('menu');
     this.createScene('action');
 
-    // Use createSprite to generate a new sprite with the correct position and anchor
-    this.createActor('menu', 'assets/logo.png', [[640, 360]], 'center');
+    // Use createObject to generate a new sprite with the correct position and anchor
+    this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
 
     // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
-    const player = this.createActor('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player');
-    player.vx = 0;
-    player.vy = 0;
-    player.gravity = 1.3;
-    player.friction = 0.9;
-    player.jumpStrength = 700;
-    player.jumps = 1;
-    player.isJumping = false;
+    this.createObject('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player', 'platform');
 
-    this.createActor('action', 'assets/platform.png', [
+    this.createObject('action', 'assets/platform.png', [
       [20, 700], [20, 450], [1100, 450], [1100, 550], [1100, 700]
     ], 'center', 'platform');
 
@@ -66,7 +61,7 @@ export class SceneDirector {
 
   }
 
-  createActor (dest, src, positions, anchor, actorTag) {
+  createObject (dest, src, positions, anchor, actorTag, controllerTag) {
 
     if (positions.length === 1) {
       let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
@@ -84,6 +79,7 @@ export class SceneDirector {
       this.app.stage.scenes[dest].addChild(sprite);
 
       if (actorTag) this.app.stage.actors[actorTag] = sprite;
+      if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
 
       return sprite;
     }

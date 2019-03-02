@@ -4,12 +4,11 @@ import { pause } from './pause.js';
 
 export class StateDirector {
 
-  constructor (app, managers) {
+  constructor (app) {
     this.app = app;
-    this.managers = managers;
-    this.play = (delta) => play(delta, this.app, this.managers);
-    this.end = (delta) => end(delta, this.app, this.managers);
-    this.pause = (delta) => pause(delta, this.app, this.managers);
+    this.play = (delta) => play(delta, this.app, this.app.managers);
+    this.end = (delta) => end(delta, this.app, this.app.managers);
+    this.pause = (delta) => pause(delta, this.app, this.app.managers);
   }
 
   gameSetup () {
@@ -24,7 +23,7 @@ export class StateDirector {
         'assets/platform.png',
         'assets/logo.png'
       ])
-      .load(() => this.managers.Scener.setup());
+      .load(() => this.app.managers.Scener.setup());
 
     // app.gameLoop will be called by the ticker set in the Scener setup with a delta; here you can manipulate the game state
     this.app.gameLoop = (delta) => {
@@ -35,7 +34,7 @@ export class StateDirector {
       }
 
       // Should be Input.update, to poll whatever type of input is decided (keyboard or GP)
-      this.managers.Gamepad.update();
+      this.app.managers.Gamepad.update();
 
       // Call the function set as app.state with delta as interval
       this[this.app.state](delta);

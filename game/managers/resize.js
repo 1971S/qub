@@ -7,19 +7,24 @@ export class ResizeManager {
   }
 
   init () {
+
     window.addEventListener('resize', () => this.resize());
     this.resize();
+
   }
 
   resize () {
+
     var view = this.app.view;
     view.style.position = 'absolute';
     view.style.left = '50%';
     view.style.top = '50%';
     view.style.transform = 'translate3d( -50%, -50%, 0 )';
+
   }
 
   toggleFullscreen () {
+
     let e = document.getElementById('body');
 
     e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
@@ -28,11 +33,13 @@ export class ResizeManager {
       e.requestFullscreen().then({}).catch(err => {
         console.log(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);  //eslint-disable-line
       });
-    } else {
+    }
+    else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
       }
     }
+
   }
 
 }
