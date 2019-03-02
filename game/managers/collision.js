@@ -37,15 +37,16 @@ export class CollisionManager {
     // checks in x axis
     let overlapX = false;
     let combinedHalfWidths;
+    let reposX;
 
     if (checker.x > checked.x) {
       let checkerhalf = checker.width - (checker.width - checker.width * checker.anchor.x);
-      let checkedhalf = checked.width - (0 + checked.width * checked.anchor.x);
+      let checkedhalf = reposX = checked.width - (0 + checked.width * checked.anchor.x);
       combinedHalfWidths = checkerhalf + checkedhalf;
     }
     else if (checker.x < checked.x) {
       let checkerhalf = checker.width - (0 + checker.width * checker.anchor.x);
-      let checkedhalf = checked.width - (checked.width - checked.width * checked.anchor.x);
+      let checkedhalf = reposX = checked.width - (checked.width - checked.width * checked.anchor.x);
       combinedHalfWidths = checkerhalf + checkedhalf;
     }
     else {
@@ -60,18 +61,38 @@ export class CollisionManager {
 
 
     if (overlapX && overlapY) {
-      let hit;
+      let hit = '';
       const resObj = {};
+
       resObj.result = true;
 
-      if (vx > vy) {
-        hit = false;
+      if (vy > 0) {
+        hit += 'top ';
+        checker.y = checked.y + combinedHalfHeights;
+        // checker.controller.onCeiling = true;
+      }
+      else {
+        hit += 'bot ';
+        checker.y = checked.y - combinedHalfHeights;
+        checker.controller.isOnFloor = true;
+        checker.controller.isJumping = false;
+      }
+
+      if (vx > 0) {
+        hit += 'right';
+        // checker.x = checked.x + combinedHalfWidths;
+      }
+      else {
+        hit += 'left';
+        // checker.x = checked.x - combinedHalfWidths;
       }
 
       resObj.type = hit;
 
+
       return resObj;
-    } else {
+    }
+    else {
       return false;
     }
 

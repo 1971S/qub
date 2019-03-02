@@ -37,6 +37,7 @@ export class SceneDirector {
   }
 
   createScene (tag, visibility) {
+
     const scene = new PIXI.Container();
 
     scene.tag = tag;
@@ -49,6 +50,7 @@ export class SceneDirector {
     } else {
       this.app.stage.scenes[tag].visible = false;
     }
+
   }
 
   changeScene (targetScene) {
@@ -108,6 +110,7 @@ export class SceneDirector {
 
       return sprites;
     }
+
   }
 
 }

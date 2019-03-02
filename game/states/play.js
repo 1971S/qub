@@ -30,22 +30,10 @@ export function play (delta, app, managers) {
     }
 
     if (Gamepad.axis('LeftX').aValue > 0.3) {
-      player.vx += 0.8 * Gamepad.axis('LeftX').oValue;
+      player.move(0.8 * Gamepad.axis('LeftX').oValue);
     }
 
     player.update();
-
-    player.vx *= player.friction;
-    player.vy *= player.friction;
-
-    const collObj = player.collide();
-
-    if (collObj.length > 0) {
-      player.isJumping = false;
-      player.vy = 0;
-    } else {
-      player.vy += player.gravity;
-    }
 
   }
 

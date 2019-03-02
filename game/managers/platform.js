@@ -11,16 +11,9 @@ export class PlatformManager {
     this.friction = 0.9;
     this.jumpStrength = 30;
     this.jumps = 1;
-    this.isJumping = false;
-  }
-
-  jump () {
-
-    if (!this.isJumping) {
-      this.isJumping = true; //should be only if im in floor
-      this.vy -= 50;
-    }
-
+    this.isJumping = true;
+    this.isOnFloor = false;
+    this.onCeiling = false;
   }
 
   update () {
@@ -29,6 +22,31 @@ export class PlatformManager {
     this.y_old = this.parent.y;
     this.parent.x += this.vx;
     this.parent.y += this.vy;
+
+    this.vx *= this.friction;
+    this.vy *= this.friction;
+
+    const collObj = this.collide();
+
+    if (collObj.length === 0) {
+      if (this.isOnFloor) this.isOnFloor = false;
+    }
+
+    if (!this.isOnFloor) this.vy += this.gravity;
+
+  }
+
+  move (movement) {
+    this.vx += movement;
+  }
+
+  jump () {
+
+    if (!this.isJumping && this.isOnFloor) {
+      this.isJumping = true; //should be only if im in floor
+      this.isOnFloor = false;
+      this.vy -= 50;
+    }
 
   }
 
