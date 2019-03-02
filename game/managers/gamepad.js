@@ -1,7 +1,8 @@
 // Make it an input manager
 export class GamepadManager {
 
-  constructor () {
+  constructor (app) {
+    this.app = app;
     this.buttonsCache = {};
     this.buttonsStatus = {};
     this.axesCache = {};

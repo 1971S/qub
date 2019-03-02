@@ -1,6 +1,10 @@
 // Not taking into account the anchor point
 export class CollisionManager {
 
+  constructor (app) {
+    this.app = app;
+  }
+
   hitTestRectangle (checker, checked) {
 
     const vy = checker.y - checked.y;

@@ -1,17 +1,18 @@
 // Aliases for PIXI methods and classes, if needed
 const App = PIXI.Application;
-const Loader = PIXI.loader;
 const Container = PIXI.Container;
 const Sprite = PIXI.Sprite;
 const GFX = PIXI.Graphics;
 const Text = PIXI.Text;
 const TextStyle = PIXI.TextStyle;
+const Loader = PIXI.loader;
 const Resources = PIXI.loader.resources;
 
 // Import the different managers that will provide helper functions
 import { ResizeManager } from './managers/resize.js';
 import { GamepadManager } from './managers/gamepad.js';
 import { CollisionManager } from './managers/collision.js';
+import { PlatformManager } from './managers/platform.js';
 
 // Import the two directors: state (or game) director and scene director
 import { SceneDirector } from './scenes/_scene-director.js';
@@ -29,12 +30,12 @@ const app = new App({
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 // Instantiate the state director, passing in all new managers and the scene director with the recently created app
-const Scener = new SceneDirector(app);
 const GameDirector = new StateDirector(app, {
-  Gamepad: new GamepadManager(), // Gamepad should be 'input', and send whatever input is chosen
-  Collider: new CollisionManager(),
+  Gamepad: new GamepadManager(app), // Gamepad should be 'input', and send whatever input is chosen
+  Platform: new PlatformManager(app),
+  Collider: new CollisionManager(app),
   Resizer: new ResizeManager(app),
-  Scener,
+  Scener: new SceneDirector(app)
 });
 
 // Aliases for app properties, if needed
@@ -51,30 +52,5 @@ app.stats = new Stats();
 app.stats.domElement.id = 'stats';
 domElement.append(app.stats.domElement);
 
-// Add the app view to the document
-document.body.appendChild(View);
-
-// Use the loader to initialize all the assets
-Loader
-  .add([
-    'assets/qub.png',
-    'assets/platform.png',
-    'assets/logo.png'
-  ])
-  .load(() => Scener.setup());
-
-// gameLoop is called by the ticker with a delta; here you can manipulate the game state
-app.gameLoop = function (delta) {
-
-  // Start the execution of the stats, if they are enabled (uncommented at the start)
-  if (app.stats) {
-    app.stats.begin();
-  }
-
-  // Should be Input.update, to poll whatever type of input is decided (keyboard or GP)
-  GameDirector.managers.Gamepad.update();
-
-  // Call the function set as app.state with delta as interval
-  GameDirector[app.state](delta);
-
-};
+// Initialize the game instance
+GameDirector.gameSetup();

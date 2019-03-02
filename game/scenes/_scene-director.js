@@ -57,9 +57,13 @@ export class SceneDirector {
   }
 
   changeScene (targetScene) {
+
     this.app.stage.scenes[targetScene].visible = true;
     this.app.stage.scenes[this.app.currentScene].visible = false;
     this.app.currentScene = targetScene;
+
+    console.log(this.app); //eslint-disable-line
+
   }
 
   createActor (dest, src, positions, anchor, actorTag) {
