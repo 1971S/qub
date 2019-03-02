@@ -13,7 +13,10 @@ export class PlatformManager {
     this.jumps = 1;
     this.isJumping = true;
     this.isOnFloor = false;
-    this.onCeiling = false;
+    this.bumpBottom = false;
+    this.bumpTop = false;
+    this.bumpRight = false;
+    this.bumpLeft = false;
   }
 
   update () {
@@ -27,17 +30,19 @@ export class PlatformManager {
     this.vy *= this.friction;
 
     const collObj = this.collide();
-
     if (collObj.length === 0) {
       if (this.isOnFloor) this.isOnFloor = false;
     }
 
     if (!this.isOnFloor) this.vy += this.gravity;
 
+    this.bumpLeft = false;
+    this.bumpRight = false;
+
   }
 
   move (movement) {
-    this.vx += movement;
+    if ((movement > 0 && !this.bumpRight) || (movement < 0 && !this.bumpLeft)) this.vx += movement;
   }
 
   jump () {

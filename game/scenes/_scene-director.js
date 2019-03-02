@@ -22,7 +22,7 @@ export class SceneDirector {
     this.createObject('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player', 'platform');
 
     this.createObject('action', 'assets/platform.png', [
-      [20, 700], [20, 450], [1100, 450], [1100, 550], [1100, 700]
+      [200, 700], [10, 660], [20, 450], [1100, 450], [1250, 660], [1100, 700]
     ], 'center', 'platform');
 
     console.log(this.app); //eslint-disable-line
