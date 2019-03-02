@@ -11,13 +11,13 @@ export class CollisionManager {
     let combinedHalfHeights;
 
     if (checker.y > checked.y) {
-      let checkerhalf = checker.height - (checker.height - checker.height * checker.anchor.y)
-      let checkedhalf = checked.height - (0 + checked.height * checked.anchor.y)
+      let checkerhalf = checker.height - (checker.height - checker.height * checker.anchor.y);
+      let checkedhalf = checked.height - (0 + checked.height * checked.anchor.y);
       combinedHalfHeights = checkerhalf + checkedhalf;
     }
     else if (checker.y < checked.y) {
-      let checkerhalf = checker.height - (0 + checker.height * checker.anchor.y)
-      let checkedhalf = checked.height - (checked.height - checked.height * checked.anchor.y)
+      let checkerhalf = checker.height - (0 + checker.height * checker.anchor.y);
+      let checkedhalf = checked.height - (checked.height - checked.height * checked.anchor.y);
       combinedHalfHeights = checkerhalf + checkedhalf;
     }
     else {
@@ -35,13 +35,13 @@ export class CollisionManager {
     let combinedHalfWidths;
 
     if (checker.x > checked.x) {
-      let checkerhalf = checker.width - (checker.width - checker.width * checker.anchor.x)
-      let checkedhalf = checked.width - (0 + checked.width * checked.anchor.x)
+      let checkerhalf = checker.width - (checker.width - checker.width * checker.anchor.x);
+      let checkedhalf = checked.width - (0 + checked.width * checked.anchor.x);
       combinedHalfWidths = checkerhalf + checkedhalf;
     }
     else if (checker.x < checked.x) {
-      let checkerhalf = checker.width - (0 + checker.width * checker.anchor.x)
-      let checkedhalf = checked.width - (checked.width - checked.width * checked.anchor.x)
+      let checkerhalf = checker.width - (0 + checker.width * checker.anchor.x);
+      let checkedhalf = checked.width - (checked.width - checked.width * checked.anchor.x);
       combinedHalfWidths = checkerhalf + checkedhalf;
     }
     else {

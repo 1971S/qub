@@ -18,7 +18,6 @@ export function play (delta, app, managers) {
   }
 
   if (cScene === 'action') {
-
     if (Gamepad.onPressed('Start')) {
       app.state = 'pause';
     }
