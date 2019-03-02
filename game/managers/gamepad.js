@@ -49,23 +49,26 @@ export class GamepadManager {
   update () {
     this.gp = navigator.getGamepads()[0];
 
-    this.buttonsCache = this.buttonsStatus;
-    this.buttonsStatus = {};
+    if (this.gp) {
+      this.buttonsCache = this.buttonsStatus;
+      this.buttonsStatus = {};
 
-    for (let i = 0; i < this.gp.buttons.length; i++) {
-      if (this.gp.buttons[i].value > 0) {
-        this.buttonsStatus[i] = this.gp.buttons[i].value;
+      for (let i = 0; i < this.gp.buttons.length; i++) {
+        if (this.gp.buttons[i].value > 0) {
+          this.buttonsStatus[i] = this.gp.buttons[i].value;
+        }
+      }
+
+      this.axesCache = this.axesStatus;
+      this.axesStatus = {};
+
+      for (let i = 0; i < this.gp.axes.length; i++) {
+        if (this.gp.axes[i] !== 0) {
+          this.axesStatus[i] = this.gp.axes[i];
+        }
       }
     }
 
-    this.axesCache = this.axesStatus;
-    this.axesStatus = {};
-
-    for (let i = 0; i < this.gp.axes.length; i++) {
-      if (this.gp.axes[i] !== 0) {
-        this.axesStatus[i] = this.gp.axes[i];
-      }
-    }
   }
 
   onPressed (buttonString) {

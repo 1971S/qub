@@ -1,6 +1,5 @@
 export function play (delta, app, managers) {
 
-  // Save as cScene the current scene enabled, and establishes business logic in each case
   const { Gamepad, Resizer, Collider, Scener } = managers;
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
@@ -19,33 +18,64 @@ export function play (delta, app, managers) {
   }
 
   if (cScene === 'action') {
-    // if (!Collider.hitTestRectangle(Actors.player, Actors.platform)) {
-    //   Actors.player.y += 10 * delta;
-    //   Actors.player.jumps = 1;
-    // } else {
-    //   // console.log('true hit');
-    // }
-
-    if (Gamepad.onHold('A')) {
-      if (Actors.player.jumps > 0) {
-        Actors.player.y -= 30 * delta;
-      }
-    }
 
     if (Gamepad.onPressed('Start')) {
       app.state = 'pause';
     }
 
-    if (Gamepad.axis('LeftX').aValue > 0.3) {
-      Actors.player.x += 5 * Gamepad.axis('LeftX').oValue * delta;
+    if (Gamepad.onPressed('A')) {
+      jump();
     }
 
-    // Start of flick detection
-    // Gamepad.axis('LeftX').diff > 0.42 && console.log(Gamepad.axis('LeftX').diff, Gamepad.axis('LeftX').oValue);
+    if (Gamepad.axis('LeftX').aValue > 0.3) {
+      Actors.player.vx += 0.8 * Gamepad.axis('LeftX').oValue;
+    }
 
+    update();
+
+    Actors.player.vx *= Actors.player.friction;
+    Actors.player.vy *= Actors.player.friction;
+
+    const collObj = collide();
+
+    if (collObj.length > 0) {
+      Actors.player.isJumping = false;
+      Actors.player.vy = 0;
+    } else {
+      Actors.player.vy += Actors.player.gravity;
+    }
+
+  }
+
+  function jump () {
+    if (!Actors.player.isJumping) {
+      Actors.player.isJumping = true; //should be only if im in floor
+      Actors.player.vy -= 50;
+    }
+  }
+
+  function update () {
+    Actors.player.x_old = Actors.player.x;
+    Actors.player.y_old = Actors.player.y;
+    Actors.player.x    += Actors.player.vx;
+    Actors.player.y    += Actors.player.vy;
+  }
+
+  function collide () {
+
+    const collObj = [];
+    Actors.platforms.forEach((platform) => {
+      if (Collider.hitTestRectangle(Actors.player, platform).result === true) {
+        collObj.push(platform);
+      }
+    });
+
+    return collObj;
   }
 
   if (app.stats) {
     app.stats.end();
   }
+
 }
+

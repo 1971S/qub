@@ -3,6 +3,7 @@ import { play } from './play.js';
 import { pause } from './pause.js';
 
 export class StateDirector {
+
   constructor (app, managers) {
     this.app = app;
     this.managers = managers;

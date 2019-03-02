@@ -4,4 +4,8 @@ export function end (delta, app, managers) {
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
 
+  if (app.stats) {
+    app.stats.end();
+  }
+
 }

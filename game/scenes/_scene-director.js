@@ -26,24 +26,52 @@ export class SceneDirector {
     this.app.currentScene = targetScene;
   }
 
-  createSprite (src, x, y, anchor, actorTag) {
+  createActor (dest, src, positions, anchor, actorTag) {
 
-    let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
-    sprite.x = x;
-    sprite.y = y;
-    if (anchor === 'center') {
-      sprite.anchor.set(0.5, 0.5);
-      sprite.pivot.set(sprite.width/2, sprite.height/2);
+    if (positions.length === 1) {
+      let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
+      sprite.x = positions[0][0];
+      sprite.y = positions[0][1];
+
+      if (anchor === 'center') {
+        sprite.anchor.set(0.5, 0.5);
+      }
+
+      if (anchor === 'bottom') {
+        sprite.anchor.set(0.5, 1);
+      }
+
+      this.app.stage.scenes[dest].addChild(sprite);
+
+      if (actorTag) this.app.stage.actors[actorTag] = sprite;
+
+      return sprite;
     }
+    else {
+      let sprites = [];
+      positions.forEach(position => {
+        let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
+        sprite.x = position[0];
+        sprite.y = position[1];
 
-    if (anchor === 'bottom') {
-      sprite.anchor.set(0.5, 1);
-      sprite.pivot.set(sprite.width/2, sprite.height);
+        if (anchor === 'center') {
+          sprite.anchor.set(0.5, 0.5);
+        }
+
+        if (anchor === 'bottom') {
+          sprite.anchor.set(0.5, 1);
+        }
+
+        this.app.stage.scenes[dest].addChild(sprite);
+
+        sprites.push(sprite);
+
+      });
+
+      if (actorTag) this.app.stage.actors[actorTag+'s'] = sprites;
+
+      return sprites;
     }
-
-    if (actorTag) this.app.stage.actors[actorTag] = sprite;
-
-    return sprite;
   }
 
 }

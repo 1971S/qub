@@ -1,52 +1,76 @@
 // Not taking into account the anchor point
 export class CollisionManager {
 
-  hitTestRectangle (r1, r2) {
+  hitTestRectangle (checker, checked) {
 
-    let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
-    hit = false;
+    const vy = checker.y - checked.y;
+    const vx = checker.x - checked.x;
 
-    //Find the center points of each sprite
-    r1.centerX = r1.x + r1.width / 2;
-    r1.centerY = r1.y + r1.height / 2;
-    r2.centerX = r2.x + r2.width / 2;
-    r2.centerY = r2.y + r2.height / 2;
+    // checks for y axis
+    let overlapY = false;
+    let combinedHalfHeights;
 
-    //Find the half-widths and half-heights of each sprite
-    r1.halfWidth = r1.width / 2;
-    r1.halfHeight = r1.height / 2;
-    r2.halfWidth = r2.width / 2;
-    r2.halfHeight = r2.height / 2;
-
-    //Calculate the distance vector between the sprites
-    vx = r1.centerX - r2.centerX;
-    vy = r1.centerY - r2.centerY;
-
-    //Figure out the combined half-widths and half-heights
-    combinedHalfWidths = r1.halfWidth + r2.halfWidth;
-    combinedHalfHeights = r1.halfHeight + r2.halfHeight;
-
-    //Check for a collision on the x axis
-    if (Math.abs(vx) < combinedHalfWidths) {
-
-      //A collision might be occurring. Check for a collision on the y axis
-      if (Math.abs(vy) < combinedHalfHeights) {
-
-        //There's definitely a collision happening
-        hit = true;
-      } else {
-
-        //There's no collision on the y axis
-        hit = false;
-      }
-    } else {
-
-      //There's no collision on the x axis
-      hit = false;
+    if (checker.y > checked.y) {
+      let checkerhalf = checker.height - (checker.height - checker.height * checker.anchor.y)
+      let checkedhalf = checked.height - (0 + checked.height * checked.anchor.y)
+      combinedHalfHeights = checkerhalf + checkedhalf;
+    }
+    else if (checker.y < checked.y) {
+      let checkerhalf = checker.height - (0 + checker.height * checker.anchor.y)
+      let checkedhalf = checked.height - (checked.height - checked.height * checked.anchor.y)
+      combinedHalfHeights = checkerhalf + checkedhalf;
+    }
+    else {
+      //
     }
 
-    //`hit` will be either `true` or `false`
-    return hit;
+    if (Math.abs(vy) <= combinedHalfHeights) {
+      overlapY = true;
+    } else {
+      return false;
+    }
+
+    // checks in x axis
+    let overlapX = false;
+    let combinedHalfWidths;
+
+    if (checker.x > checked.x) {
+      let checkerhalf = checker.width - (checker.width - checker.width * checker.anchor.x)
+      let checkedhalf = checked.width - (0 + checked.width * checked.anchor.x)
+      combinedHalfWidths = checkerhalf + checkedhalf;
+    }
+    else if (checker.x < checked.x) {
+      let checkerhalf = checker.width - (0 + checker.width * checker.anchor.x)
+      let checkedhalf = checked.width - (checked.width - checked.width * checked.anchor.x)
+      combinedHalfWidths = checkerhalf + checkedhalf;
+    }
+    else {
+      //
+    }
+
+    if (Math.abs(vx) <= combinedHalfWidths) {
+      overlapX = true;
+    } else {
+      overlapX = false;
+    }
+
+
+    if (overlapX && overlapY) {
+      let hit;
+      const resObj = {};
+      resObj.result = true;
+
+      if (vx > vy) {
+        hit = false;
+      }
+
+      resObj.type = hit;
+
+      return resObj;
+    } else {
+      return false;
+    }
+
   }
 
 }

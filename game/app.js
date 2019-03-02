@@ -1,4 +1,4 @@
-// Aliases for PIXI methods and classes
+// Aliases for PIXI methods and classes, if needed
 const App = PIXI.Application;
 const Loader = PIXI.loader;
 const Container = PIXI.Container;
@@ -10,30 +10,34 @@ const Resources = PIXI.loader.resources;
 
 // Import the different managers that will provide helper functions
 import { ResizeManager } from './managers/resize.js';
-import { GamepadManager } from './managers/Gamepad.js';
+import { GamepadManager } from './managers/gamepad.js';
 import { CollisionManager } from './managers/collision.js';
 
-// Import the two directors: state director and scene director
+// Import the two directors: state (or game) director and scene director
 import { SceneDirector } from './scenes/_scene-director.js';
 import { StateDirector } from './states/_state-director.js';
 
 // Initialize the PIXI App, with the desired settings
 const app = new App({
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: 1280,
+  height: 720,
   backgroundColor: 0x2c3e50,
+  antialias: false,
+  roundPixels: true,
 });
 
-// Instantiate the state director, passing in new managers and the scene director
+PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
+// Instantiate the state director, passing in all new managers and the scene director with the recently created app
 const Scener = new SceneDirector(app);
-const Director = new StateDirector(app, {
+const GameDirector = new StateDirector(app, {
   Gamepad: new GamepadManager(), // Gamepad should be 'input', and send whatever input is chosen
   Collider: new CollisionManager(),
   Resizer: new ResizeManager(app),
   Scener,
 });
 
-// Aliases for app properties
+// Aliases for app properties, if needed
 const Stage = app.stage;
 const Scenes = app.stage.scenes = {};
 const Actors = app.stage.actors = {};
@@ -62,30 +66,29 @@ Loader
 // Setup is called as callback when the loader finishes loading all the textures
 function setup () {
 
-  // Call createScene for each scene that we want in the game. True binds that scene as initial
+  // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
   Scener.createScene('premenu', true);
   Scener.createScene('menu');
   Scener.createScene('action');
 
   // Use createSprite to generate a new sprite with the correct position and anchor
-  const logo = Scener.createSprite('assets/logo.png', 960, 540, 'center');
+  Scener.createActor('menu', 'assets/logo.png', [[640, 360]], 'center');
 
   // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
-  const player = Scener.createSprite('assets/qub.png', 300, 100, 'center', 'player');
+  const player = Scener.createActor('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player');
   player.vx = 0;
   player.vy = 0;
-  player.gravity = 100;
+  player.gravity = 1.3;
+  player.friction = 0.9;
   player.jumpStrength = 700;
   player.jumps = 1;
   player.isJumping = false;
 
-  // Initialize the platform actor
-  const platform = Scener.createSprite('assets/platform.png', 500, 800, 'center', 'platform');
+  Scener.createActor('action', 'assets/platform.png', [
+    [20, 700], [20, 450], [1100, 450], [1100, 550], [1100, 700]
+  ], 'center', 'platform');
 
-  // Add the different childs to each scene
-  Scenes['menu'].addChild(logo);
-  Scenes['action'].addChild(player);
-  Scenes['action'].addChild(platform);
+  console.log(app); //eslint-disable-line
 
   // app.state determines the function to be executed by the director in gameLoop, enabling
   // having different states in the director: play, pause, end, etc
@@ -96,7 +99,7 @@ function setup () {
 
 }
 
-// gameLoop is called by the ticker with a delta; here you can manipulate the current game state
+// gameLoop is called by the ticker with a delta; here you can manipulate the game state
 function gameLoop (delta) {
 
   // Start the execution of the stats, if they are enabled (uncommented at the start)
@@ -105,9 +108,9 @@ function gameLoop (delta) {
   }
 
   // Should be Input.update, to poll whatever type of input is decided (keyboard or GP)
-  Director.managers.Gamepad.update();
+  GameDirector.managers.Gamepad.update();
 
   // Call the function set as app.state with delta as interval
-  Director[app.state](delta);
+  GameDirector[app.state](delta);
 
 }

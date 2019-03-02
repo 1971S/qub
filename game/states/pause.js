@@ -8,4 +8,8 @@ export function pause (delta, app, managers) {
     app.state = 'play';
   }
 
+  if (app.stats) {
+    app.stats.end();
+  }
+
 }

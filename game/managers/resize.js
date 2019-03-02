@@ -8,10 +8,15 @@ export class ResizeManager {
 
   init () {
     window.addEventListener('resize', () => this.resize());
+    this.resize();
   }
 
   resize () {
-    this.app.renderer.resize(window.innerWidth, window.innerHeight);
+    var view = this.app.view;
+    view.style.position = 'absolute';
+    view.style.left = '50%';
+    view.style.top = '50%';
+    view.style.transform = 'translate3d( -50%, -50%, 0 )';
   }
 
   toggleFullscreen () {
