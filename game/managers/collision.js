@@ -1,4 +1,3 @@
-// Not taking into account the anchor point
 export class CollisionManager {
 
   constructor (app) {

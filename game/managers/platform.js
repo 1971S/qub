@@ -26,7 +26,7 @@ export class PlatformManager {
     this.parent.bLeft = this.parent.x - (this.parent.width * (0 + this.parent.anchor.x));
     this.parent.bRight = this.parent.x + (this.parent.width * (1 - this.parent.anchor.x));
 
-    const collObj = this.collide();
+    const collidedPlatforms = this.collide('platforms');
 
     this.x_old = this.parent.x;
     this.y_old = this.parent.y;
@@ -36,8 +36,7 @@ export class PlatformManager {
     this.vx *= this.friction;
     this.vy *= this.friction;
 
-
-    if (collObj.length === 0) {
+    if (collidedPlatforms.length === 0) {
       if (this.isOnFloor) this.isOnFloor = false;
     }
 
@@ -64,20 +63,18 @@ export class PlatformManager {
 
   }
 
-  collide () {
+  collide (target) {
 
     const collObj = [];
     const cScene = this.app.activeScene;
     const Actors = this.app.stage.scenes[cScene] && this.app.stage.scenes[cScene].actors;
 
-    Actors.platforms.forEach((platform) => {
-      const res = this.collider.hitTestRectangle(Actors.player, platform);
+    Actors[target].forEach((element) => {
+      const res = this.collider.hitTestRectangle(Actors.player, element);
       if (res.result === true) {
-        collObj.push({...res, target: platform});
+        collObj.push({...res, target: element});
       }
     });
-
-    // console.log(collObj);
 
     return collObj;
 
