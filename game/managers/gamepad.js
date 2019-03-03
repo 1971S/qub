@@ -1,4 +1,3 @@
-// Make it an input manager
 export class GamepadManager {
 
   constructor (app) {
@@ -13,16 +12,14 @@ export class GamepadManager {
   }
 
   init () {
-    window.addEventListener('gamepadconnected', (e) => {
-      console.log(navigator.getGamepads()); //eslint-disable-line
-    });
 
-    window.addEventListener('gamepaddisconnected', (e) => {
-      console.log(navigator.getGamepads()); //eslint-disable-line
-    });
+    window.addEventListener('gamepadconnected', (e) => console.log(navigator.getGamepads())); //eslint-disable-line
+    window.addEventListener('gamepaddisconnected', (e) => console.log(navigator.getGamepads())); //eslint-disable-line
+
   }
 
   setBindings () {
+
     this.A = 0;
     this.B = 1;
     this.X = 2;
@@ -45,9 +42,11 @@ export class GamepadManager {
     this.LeftY = 1;
     this.RightX = 2;
     this.RightY = 3;
+
   }
 
   update () {
+
     this.gp = navigator.getGamepads()[0];
 
     if (this.gp) {
@@ -73,6 +72,7 @@ export class GamepadManager {
   }
 
   onPressed (buttonString) {
+
     if (!this.gp) return false;
     const target = this[buttonString];
     if (!this.buttonsCache[target] && this.buttonsStatus[target]) {
@@ -81,9 +81,11 @@ export class GamepadManager {
         value: this.buttonsStatus[target],
       };
     } else return false;
+
   }
 
   onHold (buttonString) {
+
     if (!this.gp) return false;
     const target = this[buttonString];
     if (this.buttonsCache[target] && this.buttonsStatus[target]) {
@@ -92,9 +94,11 @@ export class GamepadManager {
         value: this.buttonsStatus[target],
       };
     } else return false;
+
   }
 
   onRelease (buttonString) {
+
     if (!this.gp) return false;
     const target = this[buttonString];
     if (this.buttonsCache[target] && !this.buttonsStatus[target]) {
@@ -103,9 +107,11 @@ export class GamepadManager {
         value: 0,
       };
     } else return false;
+
   }
 
   axis (axisString) {
+
     if (!this.gp) return false;
     const target = this[axisString];
     if (this.axesStatus[target]) {
@@ -115,6 +121,7 @@ export class GamepadManager {
         diff: this.axesCache[target] ? this.axesStatus[target] - this.axesCache[target] : this.axesStatus[target]
       };
     } else return false;
+
   }
 
 }

@@ -15,31 +15,22 @@ export class SceneDirector {
     this.createScene('menu');
     this.createScene('action');
 
-    // Use createObject to generate a new sprite with the correct position and anchor
+    // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
     this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
 
-    // Initialize the player and assign different properties that will be used later. Add it to actors with a tag
+    // Initialize the player with an actortag and a controllertag
     this.createObject('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player', 'platform');
 
+    // Initialize the platforms
     this.createObject('action', 'assets/platform.png', [
       [200, 700], [10, 660], [20, 450], [1100, 450], [1250, 660], [1100, 700]
     ], 'center', 'platform');
-
-    console.log(this.app); //eslint-disable-line
-
-    // app.state determines the function to be executed by the director in gameLoop, enabling
-    // having different states in the director: play, pause, end, etc
-    this.app.state = 'play';
-
-    // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
-    this.app.ticker.add(delta => this.app.gameLoop(delta));
 
   }
 
   createScene (tag, visibility) {
 
     const scene = new PIXI.Container();
-
     scene.tag = tag;
     this.app.stage.addChild(scene);
     this.app.stage.scenes[tag] = scene;
@@ -47,9 +38,7 @@ export class SceneDirector {
     if (visibility === true) {
       this.app.stage.scenes[tag].visible = true;
       this.app.currentScene = tag;
-    } else {
-      this.app.stage.scenes[tag].visible = false;
-    }
+    } else this.app.stage.scenes[tag].visible = false;
 
   }
 
@@ -89,9 +78,9 @@ export class SceneDirector {
       if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
 
       return sprite;
-    }
-    else {
+    } else {
       let sprites = [];
+
       positions.forEach(position => {
         let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
         sprite.x = position[0];
@@ -113,7 +102,6 @@ export class SceneDirector {
         this.app.stage.scenes[dest].addChild(sprite);
 
         sprites.push(sprite);
-
       });
 
       if (actorTag) this.app.stage.actors[actorTag+'s'] = sprites;

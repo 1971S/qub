@@ -21,18 +21,17 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 app.stage.scenes = {};
 app.stage.actors = {}; // This should be inside each scene
 app.managers = {
-  Gamepad: new GamepadManager(app), // Gamepad should be 'input', and send whatever input is chosen
+  Gamepad: new GamepadManager(app),
   Collider: new CollisionManager(app),
   Resizer: new ResizeManager(app),
   Scener: new SceneDirector(app)
 };
 
-// Initialize and append the Stats helper for debugging. Comment to disable
+// Initialize and append the Stats helper for debugging. Comment all 4 lines to disable
 const domElement = document.getElementById('body');
 app.stats = new Stats();
 app.stats.domElement.id = 'stats';
 domElement.append(app.stats.domElement);
 
-// Instantiate the state director
-const GameDirector = new StateDirector(app);
-GameDirector.gameSetup();
+// Instantiate the state director and initialize it
+app.GameDirector = new StateDirector(app);

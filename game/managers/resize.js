@@ -1,4 +1,3 @@
-// Need scaling
 export class ResizeManager {
 
   constructor (app) {
@@ -26,7 +25,6 @@ export class ResizeManager {
   toggleFullscreen () {
 
     let e = document.getElementById('body');
-
     e.requestFullscreen = e.requestFullscreen || e.mozRequestFullscreen || e.msRequestFullscreen || e.webkitRequestFullscreen;
 
     if (!document.fullscreenElement) {
@@ -35,9 +33,7 @@ export class ResizeManager {
       });
     }
     else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
+      if (document.exitFullscreen) document.exitFullscreen();
     }
 
   }

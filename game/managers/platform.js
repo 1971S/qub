@@ -1,4 +1,3 @@
-// TODO
 export class PlatformManager {
 
   constructor (app, parent) {
@@ -50,7 +49,9 @@ export class PlatformManager {
   }
 
   move (movement) {
+
     if ((movement > 0 && !this.bumpRight) || (movement < 0 && !this.bumpLeft)) this.vx += movement;
+
   }
 
   jump () {

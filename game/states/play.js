@@ -5,22 +5,25 @@ export function play (delta, app, managers) {
   const Actors = app.stage.actors;
 
   if (cScene === 'premenu') {
+
     if (Gamepad.onPressed('A')) {
-      // Resizer.toggleFullscreen();
+      Resizer.toggleFullscreen();
       Scener.changeScene('menu');
     }
+
   }
 
   if (cScene === 'menu') {
+
     if (Gamepad.onPressed('A')) {
       Scener.changeScene('action');
     }
+
   }
 
   if (cScene === 'action') {
 
     const player = Actors.player.controller;
-
     player.update();
 
     if (Gamepad.onPressed('Start')) {
@@ -34,7 +37,6 @@ export function play (delta, app, managers) {
     if (Gamepad.axis('LeftX').aValue > 0.3) {
       player.move(player.speedX * Gamepad.axis('LeftX').oValue);
     }
-
 
   }
 
