@@ -11,53 +11,80 @@ export class SceneDirector {
   setup () {
 
     // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
-    this.createScene('premenu', true);
-    this.createScene('menu');
-    this.createScene('action');
+    this.createScene('premenu', [-1, -1], true);
+    this.createScene('menu', [-1, -1]);
+    this.createScene('action1', [320, 360]);
+    this.createScene('action2', [558, 200]);
 
     // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
     this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
 
     // Initialize the player with an actortag and a controllertag
-    this.createObject('action', 'assets/qub.png', [[30, 600]], 'bottom', 'player', 'platform');
+    this.createObject('action1', 'assets/qub.png', [[320, 360]], 'bottom', 'player', 'platform');
 
     // Initialize the platforms
-    this.createObject('action', 'assets/platform.png', [
-      [200, 700], [10, 660], [20, 450], [1100, 450], [1250, 660], [1100, 700]
+    this.createObject('action1', 'assets/platform.png', [
+      [128, 640], [192, 640], [256, 640], [320, 640], [384, 640], [448, 640], [720, 640],
+    ], 'center', 'platform');
+
+    this.createObject('action2', 'assets/platform.png', [
+      [320, 500], [558, 640],
     ], 'center', 'platform');
 
   }
 
-  createScene (tag, visibility) {
+  createScene (tag, initial, visibility) {
 
     const scene = new PIXI.Container();
     scene.tag = tag;
+    scene.initial = initial;
+    scene.actors = {};
+
     this.app.stage.addChild(scene);
     this.app.stage.scenes[tag] = scene;
 
     if (visibility === true) {
       this.app.stage.scenes[tag].visible = true;
-      this.app.currentScene = tag;
+      this.app.activeScene = tag;
     } else this.app.stage.scenes[tag].visible = false;
 
   }
 
   changeScene (targetScene) {
 
-    this.app.stage.scenes[targetScene].visible = true;
-    this.app.stage.scenes[this.app.currentScene].visible = false;
-    this.app.currentScene = targetScene;
+    const cScene = this.app.stage.scenes[this.app.activeScene];
+    const cActors = cScene.actors;
+    const tScene = this.app.stage.scenes[targetScene];
+    const tActors = tScene.actors;
 
-    console.log(this.app); //eslint-disable-line
+    if (cActors.player) {
+      if (cScene !== tScene) {
+        this.app.stage.scenes[targetScene].actors = { player: cActors.player, ...tActors };
+        tScene.addChildAt(this.app.stage.scenes[targetScene].actors.player, 0);
+        delete cActors.player;
+      }
+      this.app.stage.scenes[targetScene].actors.player.x = tScene.initial[0];
+      this.app.stage.scenes[targetScene].actors.player.y = tScene.initial[1];
+      this.app.stage.scenes[targetScene].actors.player.controller.vx = 0;
+      this.app.stage.scenes[targetScene].actors.player.controller.vy = 0;
+    }
+
+    tScene.visible = true;
+    if (cScene !== tScene) cScene.visible = false;
+    this.app.activeScene = targetScene;
+
+    console.log(this.app, this.app.activeScene); //eslint-disable-line
 
   }
 
   createObject (dest, src, positions, anchor, actorTag, controllerTag) {
 
-    if (positions.length === 1) {
+    let sprites = [];
+
+    positions.forEach(position => {
       let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
-      sprite.x = positions[0][0];
-      sprite.y = positions[0][1];
+      sprite.x = position[0];
+      sprite.y = position[1];
 
       if (anchor === 'center') {
         sprite.anchor.set(0.5, 0.5);
@@ -73,39 +100,16 @@ export class SceneDirector {
       sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
 
       this.app.stage.scenes[dest].addChild(sprite);
-
-      if (actorTag) this.app.stage.actors[actorTag] = sprite;
       if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
 
-      return sprite;
+      sprites.push(sprite);
+    });
+
+    if (sprites.length === 1) {
+      if (actorTag) this.app.stage.scenes[dest].actors[actorTag] = sprites[0];
+      return sprites[0];
     } else {
-      let sprites = [];
-
-      positions.forEach(position => {
-        let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
-        sprite.x = position[0];
-        sprite.y = position[1];
-
-        if (anchor === 'center') {
-          sprite.anchor.set(0.5, 0.5);
-        }
-
-        if (anchor === 'bottom') {
-          sprite.anchor.set(0.5, 1);
-        }
-
-        sprite.bTop = sprite.y - (sprite.height * (0 + sprite.anchor.y));
-        sprite.bBottom = sprite.y + (sprite.height * (1 - sprite.anchor.y));
-        sprite.bLeft = sprite.x - (sprite.width * (0 + sprite.anchor.x));
-        sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
-
-        this.app.stage.scenes[dest].addChild(sprite);
-
-        sprites.push(sprite);
-      });
-
-      if (actorTag) this.app.stage.actors[actorTag+'s'] = sprites;
-
+      if (actorTag) this.app.stage.scenes[dest].actors[actorTag+'s'] = sprites;
       return sprites;
     }
 

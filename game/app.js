@@ -11,7 +11,7 @@ import { StateDirector } from './states/_state-director.js';
 const app = new PIXI.Application({
   width: 1280,
   height: 720,
-  backgroundColor: 0x2c3e50,
+  backgroundColor: 0xffffff,
   antialias: false,
   roundPixels: false,
 });
@@ -19,7 +19,7 @@ const app = new PIXI.Application({
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 app.stage.scenes = {};
-app.stage.actors = {}; // This should be inside each scene
+
 app.managers = {
   Gamepad: new GamepadManager(app),
   Collider: new CollisionManager(app),

@@ -9,7 +9,7 @@ export class StateDirector {
     this.app = app;
     this.play = (delta) => play(delta, this.app);
     this.end = (delta) => end(delta, this.app);
-    this.pause = (delta) => pause(delta, this.ap);
+    this.pause = (delta) => pause(delta, this.app);
     this.gameSetup();
   }
 
@@ -24,9 +24,9 @@ export class StateDirector {
     this.app.stats.domElement.id = 'stats';
     domElement.append(this.app.stats.domElement);
 
-    // app.state determines the function to be executed by gameLoop, enabling
+    // app.activeState determines the function to be executed by gameLoop, enabling
     // having different states in the director: play, pause, end, etc
-    this.app.state = 'play';
+    this.app.activeState = 'play';
 
     // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
     this.app.ticker.add(delta => this.app.gameLoop(delta));
@@ -39,7 +39,7 @@ export class StateDirector {
 
       this.app.managers.Gamepad.update();
 
-      this[this.app.state](delta);
+      this[this.app.activeState](delta);
 
     };
 

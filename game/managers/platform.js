@@ -67,9 +67,11 @@ export class PlatformManager {
   collide () {
 
     const collObj = [];
+    const cScene = this.app.activeScene;
+    const Actors = this.app.stage.scenes[cScene] && this.app.stage.scenes[cScene].actors;
 
-    this.app.stage.actors.platforms.forEach((platform) => {
-      const res = this.collider.hitTestRectangle(this.app.stage.actors.player, platform);
+    Actors.platforms.forEach((platform) => {
+      const res = this.collider.hitTestRectangle(Actors.player, platform);
       if (res.result === true) {
         collObj.push({...res, target: platform});
       }

@@ -10,7 +10,7 @@ export class CollisionManager {
     let hit = '';
 
     if (hit === '' && a.y <= b.y && a.bBottom >= b.bTop ) {
-      if ( (a.bLeft < b.bRight && a.bLeft > b.bLeft ) || (a.bRight > b.bLeft && a.bRight < b.bRight ) ) {
+      if ( (a.bLeft < b.bRight && a.bLeft >= b.bLeft ) || (a.bRight > b.bLeft && a.bRight <= b.bRight ) ) {
         hit = 'bot';
         a.y = b.bTop; // esto solo funciona porque tiene el origen abajo
         // a.controller.vy = 0;
@@ -26,7 +26,7 @@ export class CollisionManager {
     //     a.controller.vx = 0;
     //     a.controller.bumpRight = true;
     //     console.log(hit);
-    //     this.app.state = 'pause';
+    //     this.app.activeState = 'pause';
     //   }
     // }
 
@@ -37,7 +37,7 @@ export class CollisionManager {
     //     a.controller.vx = 0;
     //     a.controller.bumpLeft = true;
     //     console.log(hit);
-    //     this.app.state = 'pause';
+    //     this.app.activeState = 'pause';
     //   }
     // }
 

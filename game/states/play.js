@@ -2,13 +2,13 @@ export function play (delta, app) {
 
   const { Gamepad, Resizer, Collider } = app.managers;
   const { Scener } = app.directors;
-  const cScene = app.currentScene;
-  const Actors = app.stage.actors;
+  const cScene = app.activeScene;
+  const Actors = app.stage.scenes[cScene] && app.stage.scenes[cScene].actors;
 
   if (cScene === 'premenu') {
 
     if (Gamepad.onPressed('A')) {
-      Resizer.toggleFullscreen();
+      // Resizer.toggleFullscreen();
       Scener.changeScene('menu');
     }
 
@@ -17,18 +17,24 @@ export function play (delta, app) {
   if (cScene === 'menu') {
 
     if (Gamepad.onPressed('A')) {
-      Scener.changeScene('action');
+      Scener.changeScene('action1');
     }
 
   }
 
-  if (cScene === 'action') {
+  if (cScene === 'action1' || cScene === 'action2') {
 
     const player = Actors.player.controller;
+    const playerSprite = Actors.player;
+
     player.update();
 
+    if (playerSprite.bTop < 0 || playerSprite.bBottom > app._options.height || playerSprite.bRight > app._options_width || playerSprite.bLeft < 0) {
+      Scener.changeScene(cScene);
+    }
+
     if (Gamepad.onPressed('Start')) {
-      app.state = 'pause';
+      app.activeState = 'pause';
     }
 
     if (Gamepad.onPressed('A')) {
@@ -38,6 +44,8 @@ export function play (delta, app) {
     if (Gamepad.axis('LeftX').aValue > 0.3) {
       player.move(player.speedX * Gamepad.axis('LeftX').oValue);
     }
+
+    if (cScene === 'action1' && playerSprite.x > 850) Scener.changeScene('action2');
 
   }
 
