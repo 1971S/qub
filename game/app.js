@@ -24,14 +24,10 @@ app.managers = {
   Gamepad: new GamepadManager(app),
   Collider: new CollisionManager(app),
   Resizer: new ResizeManager(app),
-  Scener: new SceneDirector(app)
 };
 
-// Initialize and append the Stats helper for debugging. Comment all 4 lines to disable
-const domElement = document.getElementById('body');
-app.stats = new Stats();
-app.stats.domElement.id = 'stats';
-domElement.append(app.stats.domElement);
-
-// Instantiate the state director and initialize it
-app.GameDirector = new StateDirector(app);
+// Instantiate the directors
+app.directors = {
+  Scener: new SceneDirector(app),
+  Game: new StateDirector(app),
+};

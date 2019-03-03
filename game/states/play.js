@@ -1,6 +1,7 @@
-export function play (delta, app, managers) {
+export function play (delta, app) {
 
-  const { Gamepad, Resizer, Collider, Scener } = managers;
+  const { Gamepad, Resizer, Collider } = app.managers;
+  const { Scener } = app.directors;
   const cScene = app.currentScene;
   const Actors = app.stage.actors;
 
@@ -40,8 +41,6 @@ export function play (delta, app, managers) {
 
   }
 
-  if (app.stats) {
-    app.stats.end();
-  }
+  if (app.stats) app.stats.end();
 
 }

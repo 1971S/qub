@@ -7,9 +7,9 @@ export class StateDirector {
 
   constructor (app) {
     this.app = app;
-    this.play = (delta) => play(delta, this.app, this.app.managers);
-    this.end = (delta) => end(delta, this.app, this.app.managers);
-    this.pause = (delta) => pause(delta, this.app, this.app.managers);
+    this.play = (delta) => play(delta, this.app);
+    this.end = (delta) => end(delta, this.app);
+    this.pause = (delta) => pause(delta, this.ap);
     this.gameSetup();
   }
 
@@ -17,6 +17,12 @@ export class StateDirector {
 
     // Add the app view to the document, rendering the app
     document.body.appendChild(this.app.view);
+
+    // Initialize and append the Stats helper for debugging. Comment all 4 lines to disable
+    const domElement = document.getElementById('body');
+    this.app.stats = new Stats();
+    this.app.stats.domElement.id = 'stats';
+    domElement.append(this.app.stats.domElement);
 
     // app.state determines the function to be executed by gameLoop, enabling
     // having different states in the director: play, pause, end, etc
@@ -29,14 +35,10 @@ export class StateDirector {
     this.app.gameLoop = (delta) => {
 
       // Start the execution of the stats, if they are enabled (uncommented in app.js)
-      if (this.app.stats) {
-        this.app.stats.begin();
-      }
+      if (this.app.stats) this.app.stats.begin();
 
-      // Should be Input.update, to poll whatever type of input is decided (keyboard or GP)
       this.app.managers.Gamepad.update();
 
-      // Call the function set as app.state with delta as interval
       this[this.app.state](delta);
 
     };
@@ -47,7 +49,7 @@ export class StateDirector {
         'assets/qub.png',
         'assets/platform.png',
         'assets/logo.png'
-      ]).load(() => this.app.managers.Scener.setup());
+      ]).load(() => this.app.directors.Scener.setup());
 
   }
 
