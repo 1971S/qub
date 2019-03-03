@@ -78,6 +78,11 @@ export class SceneDirector {
         sprite.anchor.set(0.5, 1);
       }
 
+      sprite.bTop = sprite.y - (sprite.height * (0 + sprite.anchor.y));
+      sprite.bBottom = sprite.y + (sprite.height * (1 - sprite.anchor.y));
+      sprite.bLeft = sprite.x - (sprite.width * (0 + sprite.anchor.x));
+      sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
+
       this.app.stage.scenes[dest].addChild(sprite);
 
       if (actorTag) this.app.stage.actors[actorTag] = sprite;
@@ -99,6 +104,11 @@ export class SceneDirector {
         if (anchor === 'bottom') {
           sprite.anchor.set(0.5, 1);
         }
+
+        sprite.bTop = sprite.y - (sprite.height * (0 + sprite.anchor.y));
+        sprite.bBottom = sprite.y + (sprite.height * (1 - sprite.anchor.y));
+        sprite.bLeft = sprite.x - (sprite.width * (0 + sprite.anchor.x));
+        sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
 
         this.app.stage.scenes[dest].addChild(sprite);
 

@@ -21,6 +21,8 @@ export function play (delta, app, managers) {
 
     const player = Actors.player.controller;
 
+    player.update();
+
     if (Gamepad.onPressed('Start')) {
       app.state = 'pause';
     }
@@ -30,10 +32,9 @@ export function play (delta, app, managers) {
     }
 
     if (Gamepad.axis('LeftX').aValue > 0.3) {
-      player.move(0.8 * Gamepad.axis('LeftX').oValue);
+      player.move(player.speedX * Gamepad.axis('LeftX').oValue);
     }
 
-    player.update();
 
   }
 
@@ -42,4 +43,3 @@ export function play (delta, app, managers) {
   }
 
 }
-

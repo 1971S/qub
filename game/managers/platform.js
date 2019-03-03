@@ -7,9 +7,10 @@ export class PlatformManager {
     this.collider = this.app.managers.Collider;
     this.vx = 0;
     this.vy = 0;
-    this.gravity = 1.3;
+    this.gravity = 1.5;
     this.friction = 0.9;
-    this.jumpStrength = 30;
+    this.speedX = 1;
+    this.jumpStrength = 50;
     this.jumps = 1;
     this.isJumping = true;
     this.isOnFloor = false;
@@ -21,6 +22,13 @@ export class PlatformManager {
 
   update () {
 
+    this.parent.bTop = this.parent.y - (this.parent.height * (0 + this.parent.anchor.y));
+    this.parent.bBottom = this.parent.y + (this.parent.height * (1 - this.parent.anchor.y));
+    this.parent.bLeft = this.parent.x - (this.parent.width * (0 + this.parent.anchor.x));
+    this.parent.bRight = this.parent.x + (this.parent.width * (1 - this.parent.anchor.x));
+
+    const collObj = this.collide();
+
     this.x_old = this.parent.x;
     this.y_old = this.parent.y;
     this.parent.x += this.vx;
@@ -29,7 +37,7 @@ export class PlatformManager {
     this.vx *= this.friction;
     this.vy *= this.friction;
 
-    const collObj = this.collide();
+
     if (collObj.length === 0) {
       if (this.isOnFloor) this.isOnFloor = false;
     }
@@ -50,7 +58,7 @@ export class PlatformManager {
     if (!this.isJumping && this.isOnFloor) {
       this.isJumping = true; //should be only if im in floor
       this.isOnFloor = false;
-      this.vy -= 50;
+      this.vy -= this.jumpStrength;
     }
 
   }
@@ -60,10 +68,13 @@ export class PlatformManager {
     const collObj = [];
 
     this.app.stage.actors.platforms.forEach((platform) => {
-      if (this.collider.hitTestRectangle(this.app.stage.actors.player, platform).result === true) {
-        collObj.push(platform);
+      const res = this.collider.hitTestRectangle(this.app.stage.actors.player, platform);
+      if (res.result === true) {
+        collObj.push({...res, target: platform});
       }
     });
+
+    // console.log(collObj);
 
     return collObj;
 

@@ -5,125 +5,51 @@ export class CollisionManager {
     this.app = app;
   }
 
-  hitTestRectangle (checker, checked) {
+  hitTestRectangle (a,b) {
 
-    const vy = checker.y - checked.y;
-    const vx = checker.x - checked.x;
+    let hit = '';
 
-    // checks for y axis
-    let overlapY = false;
-    let combinedHalfHeights;
-
-    if (checker.y > checked.y) {
-      let checkerhalf = checker.height - (checker.height - checker.height * checker.anchor.y);
-      let checkedhalf = checked.height - (0 + checked.height * checked.anchor.y);
-      combinedHalfHeights = checkerhalf + checkedhalf;
-    }
-    else if (checker.y < checked.y) {
-      let checkerhalf = checker.height - (0 + checker.height * checker.anchor.y);
-      let checkedhalf = checked.height - (checked.height - checked.height * checked.anchor.y);
-      combinedHalfHeights = checkerhalf + checkedhalf;
-    }
-    else {
-      //
-    }
-
-    if (Math.abs(vy) <= combinedHalfHeights) {
-      overlapY = true;
-    } else {
-      return false;
-    }
-
-    // checks in x axis
-    let overlapX = false;
-    let combinedHalfWidths;
-
-    if (checker.x > checked.x) {
-      let checkerhalf = checker.width - (checker.width - checker.width * checker.anchor.x);
-      let checkedhalf = checked.width - (0 + checked.width * checked.anchor.x);
-      combinedHalfWidths = checkerhalf + checkedhalf;
-    }
-    else if (checker.x < checked.x) {
-      let checkerhalf = checker.width - (0 + checker.width * checker.anchor.x);
-      let checkedhalf = checked.width - (checked.width - checked.width * checked.anchor.x);
-      combinedHalfWidths = checkerhalf + checkedhalf;
-    }
-    else {
-      //
-    }
-
-    if (Math.abs(vx) <= combinedHalfWidths) {
-      overlapX = true;
-    } else {
-      overlapX = false;
-    }
-
-
-    if (overlapX && overlapY) {
-      let hit = '';
-      let found = false;
-      const resObj = {};
-
-      resObj.result = true;
-
-
-      if (vy < 0 && !found) {
-
-        if (checker.y >= checked.y - checked.height / 2) {
-          hit += 'bot';
-          checker.controller.vy = 0;
-          checker.y = checked.y - combinedHalfHeights;
-          checker.controller.isOnFloor = true;
-          checker.controller.isJumping = false;
-          found = true;
-        }
-
+    if (hit === '' && a.y <= b.y && a.bBottom >= b.bTop ) {
+      if ( (a.bLeft < b.bRight && a.bLeft > b.bLeft ) || (a.bRight > b.bLeft && a.bRight < b.bRight ) ) {
+        hit = 'bot';
+        a.y = b.bTop; // esto solo funciona porque tiene el origen abajo
+        // a.controller.vy = 0;
+        a.controller.isOnFloor = true;
+        a.controller.isJumping = false;
       }
-
-      if (vy > 0 && !found) {
-
-        if (checker.y >= checked.y + checked.height / 2) {
-          hit += 'top';
-          checker.controller.vy = 0;
-          checker.y = checked.y + combinedHalfHeights;
-          found = true;
-        }
-
-      }
-
-      if (vx > 0 && !found) {
-
-        if (checker.x < checked.y + checked.width / 2) {
-          hit += 'left';
-          checker.x = checked.x + combinedHalfWidths;
-          checker.controller.vx = 0;
-          found = true;
-          checker.controller.bumpLeft = true;
-        }
-
-      }
-
-      if (vx < 0 && !found) {
-
-        if (checker.x > checked.y - checked.width / 2) {
-          hit += 'right';
-          checker.x = checked.x - combinedHalfWidths;
-          checker.controller.vx = 0;
-          checker.controller.bumpRight = true;
-          found = true;
-        }
-
-      }
-
-      resObj.type = hit;
-
-      // console.log(resObj);
-
-      return resObj;
     }
-    else {
-      return false;
-    }
+
+    // if (hit === '' && a.x <= b.x && a.bRight >= b.bLeft ) {
+    //   if ( (a.bTop <= b.bBottom && a.bTop >= b.bTop ) || (a.bBottom >= b.bTop && a.bBottom <= b.bBottom ) ) {
+    //     hit = 'right';
+    //     a.x = b.bLeft - a.width/2;
+    //     a.controller.vx = 0;
+    //     a.controller.bumpRight = true;
+    //     console.log(hit);
+    //     this.app.state = 'pause';
+    //   }
+    // }
+
+    // if (hit === '' && a.x >= b.x && a.bLeft <= b.bRight ) {
+    //   if ( (a.bTop <= b.bBottom && a.bTop >= b.bTop ) || (a.bBottom >= b.bTop && a.bBottom <= b.bBottom ) ) {
+    //     hit = 'left';
+    //     a.x = b.bRight + a.width/2;
+    //     a.controller.vx = 0;
+    //     a.controller.bumpLeft = true;
+    //     console.log(hit);
+    //     this.app.state = 'pause';
+    //   }
+    // }
+
+    // if (hit === '' && a.y >= b.y && a.bTop <= b.bBottom ) {
+    //   if ( (a.bLeft < b.bRight && a.bLeft > b.bLeft ) || (a.bRight > b.bLeft && a.bRight < b.bRight ) ) {
+    //     hit = 'top';
+    //     a.y = b.bBottom + a.height; // esto solo funciona porque tiene el origen abajo
+    //   }
+    // }
+
+    if (hit === '') return { result: false };
+    else return { result: true, hit: hit };
 
   }
 

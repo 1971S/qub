@@ -13,7 +13,7 @@ const app = new PIXI.Application({
   height: 720,
   backgroundColor: 0x2c3e50,
   antialias: false,
-  roundPixels: true,
+  roundPixels: false,
 });
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
