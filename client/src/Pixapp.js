@@ -18,6 +18,9 @@ class Pixapp extends Component {
    * After mounting, add the Pixi Renderer to the div and start the Application.
    */
   componentDidMount() {
+    console.log(this);
+    
+    
     this.app = new PIXI.Application({
       width: 1280,
       height: 720,
@@ -53,6 +56,9 @@ class Pixapp extends Component {
   render() {
     return (
       <div ref={(thisDiv) => {this.gameCanvas = thisDiv}} />
+      // <div>
+      //   hello
+      // </div>
     );
   }
 }

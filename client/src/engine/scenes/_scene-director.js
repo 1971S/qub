@@ -47,6 +47,9 @@ export class SceneDirector {
       [320, 500], [558, 640],
     ], 'center', 'platform');
 
+    // console.log('hey', this.app.stage);
+    
+
   }
 
   createScene (tag, initial, visibility) {
@@ -106,6 +109,8 @@ export class SceneDirector {
 
     let sprites = [];
 
+    console.log('hey start', src);
+    
     positions.forEach(position => {
       let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
       sprite.x = position[0];
@@ -127,16 +132,24 @@ export class SceneDirector {
       this.app.stage.scenes[dest].addChild(sprite);
       if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
 
+      console.log('end', sprite);
+      
+
       sprites.push(sprite);
     });
 
     if (sprites.length === 1) {
       if (actorTag) this.app.stage.scenes[dest].actors[actorTag] = sprites[0];
+      console.log(this.app);
       return sprites[0];
     } else {
       if (actorTag) this.app.stage.scenes[dest].actors[actorTag+'s'] = sprites;
+      console.log('app at end of spritecreate', this.app);
       return sprites;
     }
+
+
+    
 
   }
 
