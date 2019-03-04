@@ -11,15 +11,25 @@ export class SceneDirector {
   setup () {
 
     // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
-    this.createScene('premenu', [-1, -1], true);
-    this.createScene('menu', [-1, -1]);
-    this.createScene('action1', [320, 360]);
-    this.createScene('action2', [558, 200]);
+    this.createScene('presentation1', {logo: [640, 192], anim: [640, 200]}, true);
+    this.createScene('presentationend', {logo: [640, 192], anim: [640, 200]});
+    this.createScene('menu', {});
+    this.createScene('action1', {player: [320, 360]});
+    this.createScene('action2', {player: [558, 200]});
 
-    this.createObject('premenu', 'assets/logo2.png', [[640, 192]], 'center');
+    let ji = this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center');
+    this.app.stage.scenes['presentation1'].actors['logo'] = ji;
 
-    const anim = this.createAnimation('premenu', 'Sprite-0001 ', [this.app.screen.width/2, 200], 0.5, 0, 207);
+    const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
+    this.app.stage.scenes['presentation1'].actors['anim'] = anim;
     anim.play();
+
+    let je = this.createObject('presentationend', 'assets/pixilogo.png', [[500, 600]], 'center');
+    je.scale.x = 0.5;
+    je.scale.y = 0.5;
+    let ja = this.createObject('presentationend', 'assets/jslogo.png', [[900, 600]], 'center');
+    ja.scale.x = 0.5;
+    ja.scale.y = 0.5;
 
     // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
     this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
@@ -55,23 +65,32 @@ export class SceneDirector {
 
   }
 
-  changeScene (targetScene) {
+  changeScene (targetScene, actorsToMove) {
 
     const cScene = this.app.stage.scenes[this.app.activeScene];
-    const cActors = cScene.actors;
-    const tScene = this.app.stage.scenes[targetScene];
-    const tActors = tScene.actors;
 
-    if (cActors.player) {
-      if (cScene !== tScene) {
-        this.app.stage.scenes[targetScene].actors = { player: cActors.player, ...tActors };
-        tScene.addChildAt(this.app.stage.scenes[targetScene].actors.player, 0);
-        delete cActors.player;
-      }
-      this.app.stage.scenes[targetScene].actors.player.x = tScene.initial[0];
-      this.app.stage.scenes[targetScene].actors.player.y = tScene.initial[1];
-      this.app.stage.scenes[targetScene].actors.player.controller.vx = 0;
-      this.app.stage.scenes[targetScene].actors.player.controller.vy = 0;
+    const tScene = this.app.stage.scenes[targetScene];
+
+
+    if (actorsToMove && actorsToMove.length > 0) {
+      actorsToMove.forEach(actor => {
+        const tActors = tScene.actors;
+        const cActors = cScene.actors;
+        let act = cActors[actor];
+
+        if (cScene !== tScene) {
+          this.app.stage.scenes[targetScene].actors = { [actor]: act, ...tActors };
+          tScene.addChildAt(this.app.stage.scenes[targetScene]['actors'][actor], 0);
+          delete cActors[actor];
+        }
+        this.app.stage.scenes[targetScene].actors[actor].x = tScene.initial[actor][0];
+        this.app.stage.scenes[targetScene].actors[actor].y = tScene.initial[actor][1];
+
+        if (actor.controller) {
+          this.app.stage.scenes[targetScene].actors[actor].controller.vx = 0;
+          this.app.stage.scenes[targetScene].actors[actor].controller.vy = 0;
+        }
+      });
     }
 
     tScene.visible = true;

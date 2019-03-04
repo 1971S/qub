@@ -2,6 +2,7 @@
 import { end } from './end.js';
 import { play } from './play.js';
 import { pause } from './pause.js';
+import { presentation } from './presentation.js';
 
 export class StateDirector {
 
@@ -10,6 +11,7 @@ export class StateDirector {
     this.play = (delta) => play(delta, this.app);
     this.end = (delta) => end(delta, this.app);
     this.pause = (delta) => pause(delta, this.app);
+    this.presentation = (delta) => presentation(delta, this.app);
     this.gameSetup();
   }
 
@@ -26,7 +28,7 @@ export class StateDirector {
 
     // app.activeState determines the function to be executed by gameLoop, enabling
     // having different states in the director: play, pause, end, etc
-    this.app.activeState = 'play';
+    this.app.activeState = 'presentation';
 
     // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
     this.app.ticker.add(delta => this.app.gameLoop(delta));
@@ -50,7 +52,9 @@ export class StateDirector {
         'assets/platform.png',
         'assets/logo.png',
         'assets/logo2.png',
-        'assets/sheet.json'
+        'assets/pixilogo.png',
+        'assets/sheet.json',
+        'assets/jslogo.png'
       ]).load(() => this.app.directors.Scener.setup());
 
   }
