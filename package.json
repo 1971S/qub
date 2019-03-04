@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/jgp1971/qub#readme",
   "devDependencies": {
-    "eslint": "^5.14.1"
+    "eslint": "^5.12.0"
   }
 }
