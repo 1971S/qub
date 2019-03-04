@@ -6,6 +6,7 @@ import { CollisionManager } from './managers/collision.js';
 // Import the two directors: state (or game) director and scene director
 import { SceneDirector } from './scenes/_scene-director.js';
 import { StateDirector } from './states/_state-director.js';
+import * as PIXI from 'pixi.js';
 
 // Initialize the PIXI App, with the desired settings
 const app = new PIXI.Application({
