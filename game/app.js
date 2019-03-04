@@ -12,11 +12,11 @@ const app = new PIXI.Application({
   width: 1280,
   height: 720,
   backgroundColor: 0xffffff,
-  antialias: false,
-  roundPixels: false,
+  // antialias: true,
+  // roundPixels: true,
 });
 
-PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+// PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 app.stage.scenes = {};
 

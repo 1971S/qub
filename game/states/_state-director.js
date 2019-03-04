@@ -48,7 +48,9 @@ export class StateDirector {
       .add([
         'assets/qub.png',
         'assets/platform.png',
-        'assets/logo.png'
+        'assets/logo.png',
+        'assets/logo2.png',
+        'assets/sheet.json'
       ]).load(() => this.app.directors.Scener.setup());
 
   }

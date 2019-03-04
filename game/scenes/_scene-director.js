@@ -16,6 +16,11 @@ export class SceneDirector {
     this.createScene('action1', [320, 360]);
     this.createScene('action2', [558, 200]);
 
+    this.createObject('premenu', 'assets/logo2.png', [[640, 192]], 'center');
+
+    const anim = this.createAnimation('premenu', 'Sprite-0001 ', [this.app.screen.width/2, 200], 0.5, 0, 207);
+    anim.play();
+
     // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
     this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
 
@@ -113,6 +118,24 @@ export class SceneDirector {
       return sprites;
     }
 
+  }
+
+  createAnimation (dest, src, position, anchor, start, frames) {
+    var framesArr = [];
+
+    for (var i = start; i < frames; i++) {
+      // magically works since the spritesheet was loaded with the pixi loader
+      framesArr.push(PIXI.Texture.fromFrame(src + i + '.aseprite'));
+    }
+
+    var anim = new PIXI.extras.AnimatedSprite(framesArr);
+    anim.x = position[0];
+    anim.y = position[1];
+    anim.anchor.set(anchor);
+    anim.animationSpeed = 0.275;
+    this.app.stage.scenes[dest].addChild(anim);
+
+    return anim;
   }
 
 }
