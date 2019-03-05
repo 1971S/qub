@@ -1,4 +1,4 @@
-export class PlatformManager {
+export class PlatformModel {
 
   constructor (app, parent) {
     this.app = app;

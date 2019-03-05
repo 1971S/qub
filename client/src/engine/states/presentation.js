@@ -1,9 +1,8 @@
 export function presentation (delta, app) {
 
-  const { Gamepad, Resizer, Collider } = app.managers;
+  const { Gamepad } = app.managers;
   const { Scener } = app.directors;
   const cScene = app.activeScene;
-  const Actors = app.stage.scenes[cScene] && app.stage.scenes[cScene].actors;
 
   if (cScene === 'presentation1') {
 
@@ -26,7 +25,5 @@ export function presentation (delta, app) {
     }
 
   }
-
-  if (app.stats) app.stats.end();
 
 }

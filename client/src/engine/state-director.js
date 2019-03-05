@@ -1,30 +1,34 @@
+import * as PIXI from 'pixi.js';
+
+// Import the different managers that will provide helper functions globally
+import { ResizeManager } from './managers/resize.js';
+import { GamepadManager } from './managers/gamepad.js';
+import { CollisionManager } from './managers/collision.js';
+
 // Import all states
-import { end } from './end.js';
-import { play } from './play.js';
-import { pause } from './pause.js';
-import { presentation } from './presentation.js';
+import { play } from './states/play.js';
+import { pause } from './states/pause.js';
+import { presentation } from './states/presentation.js';
 
 export class StateDirector {
 
   constructor (app) {
     this.app = app;
+
     this.play = (delta) => play(delta, this.app);
-    this.end = (delta) => end(delta, this.app);
     this.pause = (delta) => pause(delta, this.app);
     this.presentation = (delta) => presentation(delta, this.app);
+
     this.gameSetup();
   }
 
   gameSetup () {
 
-    // Add the app view to the document, rendering the app
-    document.body.appendChild(this.app.view);
-
-    // Initialize and append the Stats helper for debugging. Comment all 4 lines to disable
-    const domElement = document.getElementById('body');
-    this.app.stats = new Stats();
-    this.app.stats.domElement.id = 'stats';
-    domElement.append(this.app.stats.domElement);
+    this.app.managers = {
+      Gamepad: new GamepadManager(this.app),
+      Collider: new CollisionManager(this.app),
+      Resizer: new ResizeManager(this.app),
+    };
 
     // app.activeState determines the function to be executed by gameLoop, enabling
     // having different states in the director: play, pause, end, etc
@@ -36,16 +40,12 @@ export class StateDirector {
     // Here we define the function that'll be called by the ticker set in the Scener setup with a delta interval
     this.app.gameLoop = (delta) => {
 
-      // Start the execution of the stats, if they are enabled (uncommented in app.js)
-      if (this.app.stats) this.app.stats.begin();
-
       this.app.managers.Gamepad.update();
-
       this[this.app.activeState](delta);
 
     };
 
-    // Use the PIXI loader to load the textures and call the scener setup after
+    // Use the PIXI loader to load the textures and call the scener setup after (like 'nameoffolderinpublic/asset.png')
     PIXI.loader
       .add([
         'assets/qub.png',

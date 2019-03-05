@@ -1,4 +1,5 @@
-import { PlatformManager } from '../managers/platform.js';
+import * as PIXI from 'pixi.js';
+import { PlatformModel } from './models/platform.js';
 
 // Think about how to instantiate the player? And move him
 export class SceneDirector {
@@ -11,40 +12,21 @@ export class SceneDirector {
   setup () {
 
     // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
-    this.createScene('presentation1', {logo: [640, 192], anim: [640, 200]}, true);
-    this.createScene('presentationend', {logo: [640, 192], anim: [640, 200]});
-    this.createScene('menu', {});
-    this.createScene('action1', {player: [320, 360]});
-    this.createScene('action2', {player: [558, 200]});
+    this.createScene('game', { player: [640, 192] }, true);
+    this.createScene('end', { player: [640, 192] });
 
-    let ji = this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center');
-    this.app.stage.scenes['presentation1'].actors['logo'] = ji;
-
-    const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
-    this.app.stage.scenes['presentation1'].actors['anim'] = anim;
-    anim.play();
-
-    let je = this.createObject('presentationend', 'assets/pixilogo.png', [[500, 600]], 'center');
-    je.scale.x = 0.5;
-    je.scale.y = 0.5;
-    let ja = this.createObject('presentationend', 'assets/jslogo.png', [[900, 600]], 'center');
-    ja.scale.x = 0.5;
-    ja.scale.y = 0.5;
-
-    // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
-    this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
-
-    // Initialize the player with an actortag and a controllertag
-    this.createObject('action1', 'assets/qub.png', [[320, 360]], 'bottom', 'player', 'platform');
+    // Initialize the player with an actortag and a controllertag. its static
+    this.createObject('game', 'nameoffolderinpublic/asset.png', [[320, 360]], 'bottom', 'player', 'platform');
 
     // Initialize the platforms
-    this.createObject('action1', 'assets/platform.png', [
+    this.createObject('game', 'assets/platform.png', [
       [128, 640], [192, 640], [256, 640], [320, 640], [384, 640], [448, 640], [720, 640],
     ], 'center', 'platform');
 
-    this.createObject('action2', 'assets/platform.png', [
-      [320, 500], [558, 640],
-    ], 'center', 'platform');
+    // The asset2.json in the state-director generates a batch of textures in memory, which we can access to create an animation
+    const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
+    this.app.stage.scenes['presentation1'].actors['anim'] = anim;
+    anim.play();
 
   }
 
@@ -70,7 +52,6 @@ export class SceneDirector {
     const cScene = this.app.stage.scenes[this.app.activeScene];
 
     const tScene = this.app.stage.scenes[targetScene];
-
 
     if (actorsToMove && actorsToMove.length > 0) {
       actorsToMove.forEach(actor => {
@@ -124,7 +105,7 @@ export class SceneDirector {
       sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
 
       this.app.stage.scenes[dest].addChild(sprite);
-      if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
+      if (controllerTag) sprite.controller = new PlatformModel(this.app, sprite);
 
       sprites.push(sprite);
     });

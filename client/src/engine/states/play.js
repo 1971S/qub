@@ -1,6 +1,6 @@
 export function play (delta, app) {
 
-  const { Gamepad, Resizer, Collider } = app.managers;
+  const { Gamepad } = app.managers;
   const { Scener } = app.directors;
   const cScene = app.activeScene;
   const Actors = app.stage.scenes[cScene] && app.stage.scenes[cScene].actors;
@@ -44,7 +44,5 @@ export function play (delta, app) {
     if (cScene === 'action1' && playerSprite.x > 850) Scener.changeScene('action2', ['player']);
 
   }
-
-  if (app.stats) app.stats.end();
 
 }

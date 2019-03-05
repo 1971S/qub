@@ -1,5 +1,5 @@
-import { PlatformManager } from '../managers/platform.js';
 import * as PIXI from 'pixi.js';
+import { PlatformModel } from './models/platform.js';
 
 // Think about how to instantiate the player? And move him
 export class SceneDirector {
@@ -18,32 +18,32 @@ export class SceneDirector {
     this.createScene('action1', {player: [320, 360]});
     this.createScene('action2', {player: [558, 200]});
 
-    let ji = this.createObject('presentation1', '../assets/logo2.png', [[640, 192]], 'center');
-    this.app.stage.scenes['presentation1'].actors['logo'] = ji;
+    let qublogo = this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center');
+    this.app.stage.scenes['presentation1'].actors['logo'] = qublogo;
 
     const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
     this.app.stage.scenes['presentation1'].actors['anim'] = anim;
     anim.play();
 
-    let je = this.createObject('presentationend', '../assets/pixilogo.png', [[500, 600]], 'center');
-    je.scale.x = 0.5;
-    je.scale.y = 0.5;
-    let ja = this.createObject('presentationend', '../assets/jslogo.png', [[900, 600]], 'center');
-    ja.scale.x = 0.5;
-    ja.scale.y = 0.5;
+    let pixiLogo = this.createObject('presentationend', 'assets/pixilogo.png', [[500, 600]], 'center');
+    pixiLogo.scale.x = 0.5;
+    pixiLogo.scale.y = 0.5;
+    let jslogo = this.createObject('presentationend', 'assets/jslogo.png', [[900, 600]], 'center');
+    jslogo.scale.x = 0.5;
+    jslogo.scale.y = 0.5;
 
     // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
-    this.createObject('menu', '../assets/logo.png', [[640, 360]], 'center');
+    this.createObject('menu', 'assets/logo.png', [[640, 360]], 'center');
 
     // Initialize the player with an actortag and a controllertag
-    this.createObject('action1', '../assets/qub.png', [[320, 360]], 'bottom', 'player', 'platform');
+    this.createObject('action1', 'assets/qub.png', [[320, 360]], 'bottom', 'player', 'platform');
 
     // Initialize the platforms
-    this.createObject('action1', '../assets/platform.png', [
+    this.createObject('action1', 'assets/platform.png', [
       [128, 640], [192, 640], [256, 640], [320, 640], [384, 640], [448, 640], [720, 640],
     ], 'center', 'platform');
 
-    this.createObject('action2', '../assets/platform.png', [
+    this.createObject('action2', 'assets/platform.png', [
       [320, 500], [558, 640],
     ], 'center', 'platform');
 
@@ -105,7 +105,7 @@ export class SceneDirector {
   createObject (dest, src, positions, anchor, actorTag, controllerTag) {
 
     let sprites = [];
-    
+
     positions.forEach(position => {
       let sprite = new PIXI.Sprite(PIXI.loader.resources[src].texture);
       sprite.x = position[0];
@@ -125,7 +125,7 @@ export class SceneDirector {
       sprite.bRight = sprite.x + (sprite.width * (1 - sprite.anchor.x));
 
       this.app.stage.scenes[dest].addChild(sprite);
-      if (controllerTag) sprite.controller = new PlatformManager(this.app, sprite);
+      if (controllerTag) sprite.controller = new PlatformModel(this.app, sprite);
 
       sprites.push(sprite);
     });
