@@ -9,7 +9,7 @@ export function presentation (delta, app) {
 
     if (Gamepad.onPressed('A')) {
       // Resizer.toggleFullscreen();
-      Scener.changeScene('presentationend', ['logo']);
+      Scener.changeScene('presentationend', ['logo', 'anim']);
     }
 
   }
@@ -22,7 +22,7 @@ export function presentation (delta, app) {
     }
 
     if (Gamepad.onPressed('B')) {
-      Scener.changeScene('presentation1', ['logo']); // should be the prev, not the first one
+      Scener.changeScene('presentation1', ['logo', 'anim']); // should be the prev, not the first one
     }
 
   }

@@ -21,9 +21,9 @@ export class SceneDirector {
     let ji = this.createObject('presentation1', '../assets/logo2.png', [[640, 192]], 'center');
     this.app.stage.scenes['presentation1'].actors['logo'] = ji;
 
-    // const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
-    // this.app.stage.scenes['presentation1'].actors['anim'] = anim;
-    // anim.play();
+    const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
+    this.app.stage.scenes['presentation1'].actors['anim'] = anim;
+    anim.play();
 
     let je = this.createObject('presentationend', '../assets/pixilogo.png', [[500, 600]], 'center');
     je.scale.x = 0.5;

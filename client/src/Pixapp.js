@@ -14,8 +14,10 @@ import './Pixapp.css';
 
 class Pixapp extends Component {
 
+  gameCanvas = React.createRef()
+
   componentDidMount() {
-    
+    console.log('REF', this.gameCanvas.current)
     this.app = new PIXI.Application({
       width: 1280,
       height: 720,
@@ -23,7 +25,7 @@ class Pixapp extends Component {
       // antialias: true,
       // roundPixels: true,
     });
-    this.gameCanvas.appendChild(this.app.renderer.view);
+    this.gameCanvas.current.appendChild(this.app.view);
     this.app.stage.scenes = {};
     this.app.managers = {
       Gamepad: new GamepadManager(this.app),
@@ -34,15 +36,16 @@ class Pixapp extends Component {
     // Instantiate the directors
     this.app.directors = {
       Scener: new SceneDirector(this.app),
-      Game: new StateDirector(this.app, this.gameCanvas),
+      Game: new StateDirector(this.app),
     };
 
     console.log('pixapp', this.app);
   }
 
   render() {
+    console.log('render');
     return (
-      <div ref={(thisDiv) => {this.gameCanvas = thisDiv}} />
+      <div ref={this.gameCanvas} />
     );
   }
 }
