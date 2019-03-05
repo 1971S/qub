@@ -1,24 +1,23 @@
 import * as PIXI from 'pixi.js';
 import { PlatformModel } from './models/platform.js';
 
-// Think about how to instantiate the player? And move him
 export class SceneDirector {
 
   constructor (app) {
     this.app = app;
   }
 
-  // Setup is called as callback when the loader finishes loading all the textures
+  // Setup is called as callback when the loader finishes loading all the textures in the statedirector
   setup () {
 
     // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
     this.createScene('game', { player: [640, 192] }, true);
     this.createScene('end', { player: [640, 192] });
 
-    // Initialize the player with an actortag and a controllertag. its static
+    // Initialize the player (static sprite) with an actortag and a controllertag
     this.createObject('game', 'nameoffolderinpublic/asset.png', [[320, 360]], 'bottom', 'player', 'platform');
 
-    // Initialize the platforms
+    // Initialize the platforms (static sprites)
     this.createObject('game', 'assets/platform.png', [
       [128, 640], [192, 640], [256, 640], [320, 640], [384, 640], [448, 640], [720, 640],
     ], 'center', 'platform');
