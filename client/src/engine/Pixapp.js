@@ -32,7 +32,7 @@ class Pixapp extends Component {
 
   render() {
     return (
-      <div ref={this.gameCanvas} />
+      <div className="pixapp-header" ref={this.gameCanvas} />
     );
   }
 }
