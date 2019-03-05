@@ -45,15 +45,15 @@ export class StateDirector {
 
     // Use the PIXI loader to load the textures and call the scener setup after (like 'nameoffolderinpublic/asset.png')
     PIXI.loader
-      .add([
-        'assets/qub.png',
-        'assets/platform.png',
-        'assets/logo.png',
-        'assets/logo2.png',
-        'assets/pixilogo.png',
-        'assets/sheet.json',
-        'assets/jslogo.png'
-      ]).load(() => this.app.directors.Scener.setup());
+    .add([
+      'assets/qub.png',
+      'assets/platform.png',
+      'assets/logo.png',
+      'assets/logo2.png',
+      'assets/pixilogo.png',
+      'assets/sheet.json',
+      'assets/jslogo.png'
+    ]).load(() => this.app.directors.Scener.setup());
 
   }
 

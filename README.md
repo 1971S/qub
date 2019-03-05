@@ -1,6 +1,6 @@
-# qub
+# qub engine + qub
 
-A platforming game created with pixi.js
+Vanilla JS, PIXI-based 2D game engine, ready to be embedded as a React component.
 
 ## Setup
 

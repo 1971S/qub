@@ -18,7 +18,8 @@ export class SceneDirector {
     this.createScene('action1', {player: [320, 360]});
     this.createScene('action2', {player: [558, 200]});
 
-    // CREATESCENE WORKING AS INTENDED
+    /////
+    // CREATESCENE WORKING AS INTENDED, GOTTA WORK ON CREATEOBJECT
     /////
 
     this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center', 'logo');

@@ -1,4 +1,4 @@
-// Not in use, not adapted to work inside react
+// Not in use, not adapted to work inside react. Do not use
 export class ResizeManager {
 
   constructor (app) {
