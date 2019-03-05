@@ -5,7 +5,7 @@ import { ResizeManager } from './managers/resize.js';
 import { GamepadManager } from './managers/gamepad.js';
 import { CollisionManager } from './managers/collision.js';
 
-// Import all states, to be added in the constructor as functions
+// Import all states created in the states folder, to be added in the constructor as functions
 import { blank } from './states/_stateblueprint';
 
 export class StateDirector {
