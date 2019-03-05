@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
+import './Pixapp.css';
 
 // Import the two directors: state (or game) director and scene director
 import { SceneDirector } from './scene-director.js';
 import { StateDirector } from './state-director.js';
-
-import './Pixapp.css';
 
 class Pixapp extends Component {
 
@@ -13,13 +12,17 @@ class Pixapp extends Component {
 
   componentDidMount() {
 
+    // Initialize a new pixi app, with the desired settings
     this.app = new PIXI.Application({
       width: 1280,
       height: 720,
       backgroundColor: 0xffffff,
     });
 
+    // Append the newly created app' view to the gameCanvas for rendering
     this.gameCanvas.current.appendChild(this.app.view);
+
+    // Create the scenes object that will be used by both directors
     this.app.stage.scenes = {};
 
     // Instantiate the directors
@@ -35,6 +38,7 @@ class Pixapp extends Component {
       <div className="pixapp-header" ref={this.gameCanvas} />
     );
   }
+
 }
 
 export default Pixapp;

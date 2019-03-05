@@ -18,8 +18,10 @@ export class SceneDirector {
     this.createScene('action1', {player: [320, 360]});
     this.createScene('action2', {player: [558, 200]});
 
-    let qublogo = this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center');
-    this.app.stage.scenes['presentation1'].actors['logo'] = qublogo;
+    // CREATESCENE WORKING AS INTENDED
+    /////
+
+    this.createObject('presentation1', 'assets/logo2.png', [[640, 192]], 'center', 'logo');
 
     const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
     this.app.stage.scenes['presentation1'].actors['anim'] = anim;
@@ -69,9 +71,7 @@ export class SceneDirector {
   changeScene (targetScene, actorsToMove) {
 
     const cScene = this.app.stage.scenes[this.app.activeScene];
-
     const tScene = this.app.stage.scenes[targetScene];
-
 
     if (actorsToMove && actorsToMove.length > 0) {
       actorsToMove.forEach(actor => {

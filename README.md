@@ -17,5 +17,6 @@ A platforming game created with pixi.js
 4. Correct and complete colliding system
 5. Movable platform model
 6. Particles
-7. Input manager
-8. Adapt the managers to the react environment (event listeners not working, remnants from vanillajs)
+7. Adapt the managers to the react environment (event listeners not working, remnants from vanillajs)
+8. Input manager
+9. JSON with ChangeScene conditions for each scene, with the events to listen to in each case, the scene to go and which objects to carry

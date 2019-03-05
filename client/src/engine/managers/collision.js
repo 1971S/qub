@@ -1,3 +1,4 @@
+// Very barebones performance, needs a lot of work
 export class CollisionManager {
 
   constructor (app) {
@@ -11,7 +12,7 @@ export class CollisionManager {
     if (hit === '' && a.y <= b.y && a.bBottom >= b.bTop ) {
       if ( (a.bLeft < b.bRight && a.bLeft >= b.bLeft ) || (a.bRight > b.bLeft && a.bRight <= b.bRight ) ) {
         hit = 'bot';
-        a.y = b.bTop; // esto solo funciona porque tiene el origen abajo
+        a.y = b.bTop; // this only works because the player anchor is at bottom, fix it
         // a.controller.vy = 0;
         a.controller.isOnFloor = true;
         a.controller.isJumping = false;
