@@ -7,7 +7,8 @@ import * as PIXI from 'pixi.js';
 
 export class StateDirector {
 
-  constructor (app) {
+  constructor (app, canvas) {
+    this.canvas = canvas;
     this.app = app;
     this.play = (delta) => play(delta, this.app);
     this.end = (delta) => end(delta, this.app);
@@ -19,7 +20,7 @@ export class StateDirector {
   gameSetup () {
     
     // Add the app view to the document, rendering the app
-    // document.body.appendChild(this.app.view);
+    this.canvas.appendChild(this.app.view);
     
     // Initialize and append the Stats helper for debugging. Comment all 4 lines to disable
     // const domElement = document.getElementById('body');
@@ -59,8 +60,7 @@ export class StateDirector {
       '../assets/sheet.json',
       '../assets/jslogo.png'
     ]).load(() => this.app.directors.Scener.setup());
-    
-    console.log('all state loaded', this.app);
+
   }
   
 }

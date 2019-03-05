@@ -13,13 +13,8 @@ import { StateDirector } from './engine/states/_state-director.js';
 import './Pixapp.css';
 
 class Pixapp extends Component {
-  
-  /**
-   * After mounting, add the Pixi Renderer to the div and start the Application.
-   */
+
   componentDidMount() {
-    console.log(this);
-    
     
     this.app = new PIXI.Application({
       width: 1280,
@@ -28,7 +23,7 @@ class Pixapp extends Component {
       // antialias: true,
       // roundPixels: true,
     });
-    this.gameCanvas.appendChild(this.app.view);
+    this.gameCanvas.appendChild(this.app.renderer.view);
     this.app.stage.scenes = {};
     this.app.managers = {
       Gamepad: new GamepadManager(this.app),
@@ -39,26 +34,15 @@ class Pixapp extends Component {
     // Instantiate the directors
     this.app.directors = {
       Scener: new SceneDirector(this.app),
-      Game: new StateDirector(this.app),
+      Game: new StateDirector(this.app, this.gameCanvas),
     };
 
     console.log('pixapp', this.app);
-    
   }
-  
-  /**
-   * Stop the Application when unmounting.
-   */
-  // componentWillUnmount() {
-  //   this.app.stop();
-  // }
 
   render() {
     return (
       <div ref={(thisDiv) => {this.gameCanvas = thisDiv}} />
-      // <div>
-      //   hello
-      // </div>
     );
   }
 }
