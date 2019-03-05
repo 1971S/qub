@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as PIXI from 'pixi.js';
 import './Pixapp.css';
+import Pixauth from './Pixauth'
 
 // Import the two directors: state (or game) director and scene director
 import { SceneDirector } from './scene-director.js';
@@ -35,7 +36,10 @@ class Pixapp extends Component {
 
   render() {
     return (
-      <div className="pixapp-header" ref={this.gameCanvas} />
+      <div>
+        <Pixauth app={this.app}/>
+        <div className="pixapp-header" ref={this.gameCanvas} />
+      </div>
     );
   }
 

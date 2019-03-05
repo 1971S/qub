@@ -8,3 +8,11 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+.authbody {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: aquamarine;
+  z-index: 10;
+}
