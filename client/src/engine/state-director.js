@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 // Import the different managers that will provide helper functions globally
-import { ResizeManager } from './managers/resize.js';
 import { GamepadManager } from './managers/gamepad.js';
 import { CollisionManager } from './managers/collision.js';
 
@@ -27,7 +26,6 @@ export class StateDirector {
     this.app.managers = {
       Gamepad: new GamepadManager(this.app),
       Collider: new CollisionManager(this.app),
-      Resizer: new ResizeManager(this.app),
     };
 
     // app.activeState determines the function to be executed by gameLoop, enabling

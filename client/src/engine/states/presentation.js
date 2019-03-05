@@ -7,7 +7,6 @@ export function presentation (delta, app) {
   if (cScene === 'presentation1') {
 
     if (Gamepad.onPressed('A')) {
-      // Resizer.toggleFullscreen();
       Scener.changeScene('presentationend', ['logo', 'anim']);
     }
 
