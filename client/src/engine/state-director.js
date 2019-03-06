@@ -49,10 +49,23 @@ export class StateDirector {
       'assets/qub.png',
       'assets/platform.png',
       'assets/logo.png',
+      'assets/win.png',
       'assets/logo2.png',
       'assets/pixilogo.png',
       'assets/sheet.json',
-      'assets/jslogo.png'
+      'assets/jslogo.png',
+      'assets/welcome.png',
+      'assets/concept.png',
+      'assets/settings.png',
+      'assets/controller.png',
+      'assets/locked.png',
+      'assets/engine.png',
+      'assets/lets.png',
+      'assets/failure.png',
+      'assets/react.png',
+      'assets/logo3.png',
+      'assets/insights.png',
+      'assets/thanks.png',
     ]).load(() => this.app.directors.Scener.setup());
 
   }

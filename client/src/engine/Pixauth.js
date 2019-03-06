@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as PIXI from 'pixi.js';
+// import * as PIXI from 'pixi.js';
 import './Pixauth.css';
 
 class Pixauth extends Component {
@@ -10,9 +10,6 @@ class Pixauth extends Component {
   }
 
   render() {
-    console.log(this.state.loggedIn);
-    console.log(this.props);
-
     if (this.state.loggedIn && this.state.requireLogin) {
       return (
         <div>

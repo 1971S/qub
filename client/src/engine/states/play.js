@@ -11,9 +11,9 @@ export function play (delta, app) {
       Scener.changeScene('action1');
     }
 
-    if (Gamepad.onPressed('B')) {
-      Scener.changeScene('presentationend');
-      app.activeState = 'presentation';
+    if (Actors.react.y > 600) {
+      Actors.react.y -= 5;
+      Actors.logo3.y -= 5;
     }
 
   }
@@ -41,7 +41,29 @@ export function play (delta, app) {
       player.move(player.speedX * Gamepad.axis('LeftX').oValue);
     }
 
-    if (cScene === 'action1' && playerSprite.x > 850) Scener.changeScene('action2', ['player']);
+    const winObj = player.collide('wins');
+
+    if (winObj.length > 0) {
+      if (cScene === 'action1') Scener.changeScene('action2', ['player']);
+      if (cScene === 'action2') Scener.changeScene('presentationend');
+    }
+
+  }
+
+  if (cScene === 'presentationend') {
+
+    if (Gamepad.onPressed('A')) {
+      if (Actors.fail.y === 360) Actors.fail.y -= 1;
+      if (Actors.insights.y <= 370) Scener.changeScene('thanks');
+    }
+
+    if (Actors.fail.y !== 360) {
+      if (Actors.insights.y > 495) Actors.insights.y -= 15;
+      else {
+        if (Actors.fail.y > -100) Actors.fail.y -= 15
+        if (Actors.insights.y > 370) Actors.insights.y -= 15
+      }
+    }
 
   }
 

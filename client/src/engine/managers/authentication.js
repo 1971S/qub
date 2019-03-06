@@ -5,7 +5,7 @@ export class AuthenticationManager {
   }
 
   checkState () {
-    console.log(this.app.currentScene);
+    console.log(this.app.activeScene);
   }
 
 }
