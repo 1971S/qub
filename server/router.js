@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const controller = require('./controller');
 
-router.get('/events', controller.getAll);
+router.get('/users', controller.getAll);
 
-router.post('/events', controller.postOne);
+router.post('/users', controller.postOne);
 
 module.exports = router;

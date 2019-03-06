@@ -3,9 +3,9 @@ const User = require('./model');
 exports.getAll = async (req, res) => {
 
   try {
-    const events = await Event.find();
+    const users = await User.find();
     res.status(200);
-    res.send(events);
+    res.send(users);
   } catch (e) {
     res.status(400);
     res.send(err);
@@ -16,9 +16,9 @@ exports.getAll = async (req, res) => {
 exports.postOne = async (req, res) => {
 
   try {
-    const event = await Event.create(req.body);
+    const user = await User.create(req.body);
     res.status(201);
-    res.send(event);
+    res.send(user);
   } catch (e) {
     res.status(400);
     res.send(err);

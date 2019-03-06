@@ -12,6 +12,4 @@ export function authorization (delta, app) {
 
   // Write other business logic
 
-  // if (app.activeScene === '')
-
 }

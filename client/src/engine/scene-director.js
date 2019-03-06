@@ -169,6 +169,7 @@ export class SceneDirector {
   }
 
   createAnimation (dest, src, position, anchor, start, frames) {
+
     var framesArr = [];
 
     for (var i = start; i < frames; i++) {
@@ -184,6 +185,7 @@ export class SceneDirector {
     this.app.stage.scenes[dest].addChild(anim);
 
     return anim;
+    
   }
 
 }
