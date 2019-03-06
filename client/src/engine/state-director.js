@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import { GamepadManager } from './managers/gamepad.js';
 import { CollisionManager } from './managers/collision.js';
 
-// Import all states
+// Import all states, to be declared as functions in the constructor
 import { play } from './states/play.js';
 import { pause } from './states/pause.js';
 import { presentation } from './states/presentation.js';
@@ -32,7 +32,7 @@ export class StateDirector {
     // having different states in the director: play, pause, end, etc
     this.app.activeState = 'presentation';
 
-    // Add a ticker to the app that will create a game loop, by calling gameLoop with delta as interval
+    // Add a ticker to the app that will create a game loop, by calling app.gameLoop with delta as interval
     this.app.ticker.add(delta => this.app.gameLoop(delta));
 
     // Here we define the function that'll be called by the ticker set in the Scener setup with a delta interval

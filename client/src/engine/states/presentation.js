@@ -10,6 +10,7 @@ export function presentation (delta, app) {
     if (Gamepad.onPressed('A')) {
       Scener.changeScene('presentation1');
     }
+
   }
 
   if (cScene === 'presentation1') {
@@ -21,6 +22,7 @@ export function presentation (delta, app) {
     if (Actors.logo.y !== 360) {
       if (Actors.logo.y > 192) Actors.logo.y -= 2;
     }
+    
     if (Actors.logo.y <= 192) {
       Actors.logo.y = 192;
       if (Actors.anim) Scener.changeScene('presentation2', ['logo', 'anim']);
@@ -44,10 +46,6 @@ export function presentation (delta, app) {
   }
 
   if (cScene === 'presentation3') {
-
-    // if (Gamepad.onPressed('A')) {
-    //   Scener.changeScene('presentationend', ['logo', 'anim']);
-    // }
 
     if (Actors.jsl.y > 600) {
       Actors.jsl.y -= 5;

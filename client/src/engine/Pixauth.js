@@ -10,7 +10,8 @@ class Pixauth extends Component {
   }
 
   render() {
-    if (this.state.loggedIn && this.state.requireLogin) {
+
+    if (!this.state.loggedIn && this.state.requireLogin) {
       return (
         <div>
           <div className="authbodyon">HELLO</div>
@@ -21,7 +22,9 @@ class Pixauth extends Component {
         <div className="authbodyoff"></div>
       );
     }
+
   }
+
 }
 
 export default Pixauth;

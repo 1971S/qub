@@ -1,17 +1,16 @@
 import * as PIXI from 'pixi.js';
 import { PlatformModel } from './models/platform.js';
 
-// Think about how to instantiate the player? And move him
 export class SceneDirector {
 
   constructor (app) {
     this.app = app;
   }
 
-  // Setup is called as callback when the loader finishes loading all the textures
+  // Setup is called as callback when the loader finishes loading all the textures in the statedirector
   setup () {
 
-    // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
+    // Call createScene for each scene that we want in the game. 'True' binds that scene as the starting scene
     this.createScene('presentation0', {}, true);
     this.createScene('presentation1', {logo: [640, 192], anim: [640, 200]});
     this.createScene('presentation2', {logo: [640, 192], anim: [640, 200]});
@@ -22,14 +21,15 @@ export class SceneDirector {
     this.createScene('presentationend', {logo: [640, 192], anim: [640, 200]});
     this.createScene('thanks', {logo: [640, 192], anim: [640, 200]});
 
-    /////
-    // CREATESCENE WORKING AS INTENDED, GOTTA WORK ON CREATEOBJECT
-    /////
-
+    // Use createObject to create new sprites for each scene with their desired options
+    // presentation0
     let welcome = this.createObject('presentation0', 'assets/welcome.png', [[640, 360]], 'center');
     welcome.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+
+    // presentation1
     this.createObject('presentation1', 'assets/logo2.png', [[640, 360]], 'center', 'logo');
-    
+
+    // presentation2
     const anim = this.createAnimation('presentation2', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
     this.app.stage.scenes['presentation1'].actors['anim'] = anim;
     anim.play();
@@ -40,6 +40,7 @@ export class SceneDirector {
     this.createObject('presentation2', 'assets/locked.png', [[960, 900]], 'center', 'lock');
     this.createObject('presentation2', 'assets/settings.png', [[320, 900]], 'center', 'sett');
 
+    // presentation3
     let engineGfx = this.createObject('presentation3', 'assets/engine.png', [[640, 420]], 'center');
     engineGfx.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
     let pixiLogo = this.createObject('presentation3', 'assets/pixilogo.png', [[500, 900]], 'center', 'pxl');
@@ -49,30 +50,31 @@ export class SceneDirector {
     jslogo.scale.x = 0.5;
     jslogo.scale.y = 0.5;
 
-    // Use createObject to generate a new sprite with the correct position and anchor, and the destination scene
+    // menu
     this.createObject('menu', 'assets/lets.png', [[640, 420]], 'center');
     this.createObject('menu', 'assets/react.png', [[464, 900]], 'center', 'react');
     this.createObject('menu', 'assets/logo3.png', [[816, 900]], 'center', 'logo3');
 
-    let failure = this.createObject('presentationend', 'assets/failure.png', [[640, 360]], 'center', 'fail');
-    failure.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
-    let insights = this.createObject('presentationend', 'assets/insights.png', [[640, 900]], 'center', 'insights');
-    insights.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
-
-    // Initialize the player with an actortag and a controllertag
+    // action1: Initialize the player with both an actortag and a controllertag, and then the normal platforms and the win platforms
     this.createObject('action1', 'assets/qub.png', [[320, 360]], 'bottom', 'player', 'platform');
-    this.createObject('action1', 'assets/win.png', [[1000, 460], [1064, 460]], 'center', 'win');
-    
-    // Initialize the platforms
     this.createObject('action1', 'assets/platform.png', [
       [128, 640], [192, 640], [256, 640], [320, 640], [384, 640], [448, 640], [720, 640],
     ], 'center', 'platform');
-    
+    this.createObject('action1', 'assets/win.png', [[1000, 460], [1064, 460]], 'center', 'win');
+
+    // action2
     this.createObject('action2', 'assets/win.png', [[100, 400],[164, 400]], 'center', 'win');
     this.createObject('action2', 'assets/platform.png', [
       [880, 680], [944, 680], [540, 610], [300, 540],
     ], 'center', 'platform');
 
+    // presentationend
+    let failure = this.createObject('presentationend', 'assets/failure.png', [[640, 360]], 'center', 'fail');
+    failure.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+    let insights = this.createObject('presentationend', 'assets/insights.png', [[640, 900]], 'center', 'insights');
+    insights.texture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST
+
+    // thanks
     this.createObject('thanks', 'assets/thanks.png', [[640, 360]], 'center');
 
   }

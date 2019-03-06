@@ -9,7 +9,7 @@ import { StateDirector } from './state-director.js';
 
 class Pixapp extends Component {
 
-  gameCanvas = React.createRef()
+  gameCanvas = React.createRef();
 
   componentDidMount() {
 
@@ -20,7 +20,7 @@ class Pixapp extends Component {
       backgroundColor: 0xffffff,
     });
 
-    // Append the newly created app' view to the gameCanvas for rendering
+    // Append the newly created app' view to the gameCanvas for rendering through the ref
     this.gameCanvas.current.appendChild(this.app.view);
 
     // Create the scenes object that will be used by both directors
@@ -35,12 +35,14 @@ class Pixapp extends Component {
   }
 
   render() {
+
     return (
       <div>
         <Pixauth app={this.app}/>
         <div className="pixapp-header" ref={this.gameCanvas} />
       </div>
     );
+    
   }
 
 }
