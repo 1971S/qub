@@ -1,4 +1,4 @@
-// Very barebones performance, needs a lot of work
+// Very barebones performance, needs a lot of work. Needs not to modify the isOnFloor or isJumping
 export class CollisionManager {
 
   constructor (app) {

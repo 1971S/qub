@@ -19,7 +19,7 @@ export class PlatformModel {
     this.bumpLeft = false;
   }
 
-  update () {
+  update (delta) {
 
     this.parent.bTop = this.parent.y - (this.parent.height * (0 + this.parent.anchor.y));
     this.parent.bBottom = this.parent.y + (this.parent.height * (1 - this.parent.anchor.y));
@@ -30,26 +30,26 @@ export class PlatformModel {
 
     this.x_old = this.parent.x;
     this.y_old = this.parent.y;
-    this.parent.x += this.vx;
-    this.parent.y += this.vy;
+    this.parent.x += this.vx * delta;
+    this.parent.y += this.vy * delta;
 
-    this.vx *= this.friction;
-    this.vy *= this.friction;
+    this.vx *= this.friction * delta;
+    this.vy *= this.friction * delta;
 
     if (collidedPlatforms.length === 0) {
       if (this.isOnFloor) this.isOnFloor = false;
     }
 
-    if (!this.isOnFloor) this.vy += this.gravity;
+    if (!this.isOnFloor) this.vy += this.gravity * delta;
 
     this.bumpLeft = false;
     this.bumpRight = false;
 
   }
 
-  move (movement) {
+  move (delta, movement) {
 
-    if ((movement > 0 && !this.bumpRight) || (movement < 0 && !this.bumpLeft)) this.vx += movement;
+    if ((movement > 0 && !this.bumpRight) || (movement < 0 && !this.bumpLeft)) this.vx += movement * delta;
 
   }
 

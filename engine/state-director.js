@@ -47,7 +47,7 @@ export class StateDirector {
       .add([
         'nameoffolderinpublic/player.png',
         'nameoffolderinpublic/platform.png',
-        'nameoffolderinpublic/asset2.json'
+        'nameoffolderinpublic/anim.json'
       ]).load(() => this.app.directors.Scener.setup());
 
   }

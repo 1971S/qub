@@ -1,5 +1,5 @@
 export function blank (delta, app) {
 
-  // To do
+  // to do
 
 }

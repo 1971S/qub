@@ -1,7 +1,7 @@
 export function blank (delta, app) {
 
   // Import the different managers, if needed
-  // const { Gamepad, Resizer, Collider } = app.managers;
+  // const { Gamepad, Collider } = app.managers;
 
   // Import the scener, if needed
   // const { Scener } = app.directors;

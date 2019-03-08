@@ -4,4 +4,8 @@ export class AuthenticationManager {
     this.app = app;
   }
 
+  checkState () {
+    console.log(this.app.activeScene);
+  }
+
 }

@@ -7,13 +7,13 @@ export function play (delta, app) {
 
   if (cScene === 'menu') {
 
-    if (Gamepad.onPressed('A')) {
+    if (Gamepad.onPressed('A') && Actors.react.y <= 600) {
       Scener.changeScene('action1');
     }
 
     if (Actors.react.y > 600) {
-      Actors.react.y -= 5;
-      Actors.logo3.y -= 5;
+      Actors.react.y -= 5 * delta;
+      Actors.logo3.y -= 5 * delta;
     }
 
   }
@@ -23,7 +23,7 @@ export function play (delta, app) {
     const player = Actors.player.controller;
     const playerSprite = Actors.player;
 
-    player.update();
+    player.update(delta);
 
     if (playerSprite.bTop < 0 || playerSprite.bBottom > app._options.height || playerSprite.bRight > app._options_width || playerSprite.bLeft < 0) {
       Scener.changeScene(cScene, ['player']);
@@ -38,7 +38,7 @@ export function play (delta, app) {
     }
 
     if (Gamepad.axis('LeftX').aValue > 0.3) {
-      player.move(player.speedX * Gamepad.axis('LeftX').oValue);
+      player.move(delta, player.speedX * Gamepad.axis('LeftX').oValue);
     }
 
     const winObj = player.collide('wins');
@@ -58,10 +58,10 @@ export function play (delta, app) {
     }
 
     if (Actors.fail.y !== 360) {
-      if (Actors.insights.y > 495) Actors.insights.y -= 15;
+      if (Actors.insights.y > 495) Actors.insights.y -= 15 * delta;
       else {
-        if (Actors.fail.y > -100) Actors.fail.y -= 15
-        if (Actors.insights.y > 370) Actors.insights.y -= 15
+        if (Actors.fail.y > -100) Actors.fail.y -= 15 * delta;
+        if (Actors.insights.y > 370) Actors.insights.y -= 15 * delta;
       }
     }
 
