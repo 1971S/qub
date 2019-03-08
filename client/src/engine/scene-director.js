@@ -21,6 +21,10 @@ export class SceneDirector {
     this.createScene('presentationend', {logo: [640, 192], anim: [640, 200]});
     this.createScene('thanks', {logo: [640, 192], anim: [640, 200]});
 
+    /////
+    // CREATESCENE WORKING AS INTENDED, GOTTA WORK ON CREATEOBJECT
+    /////
+
     // Use createObject to create new sprites for each scene with their desired options
     // presentation0
     let welcome = this.createObject('presentation0', 'assets/welcome.png', [[640, 360]], 'center');

@@ -1,3 +1,4 @@
+// In use, but not fully adapted to react (window event listeners not working)
 export class GamepadManager {
 
   constructor (app) {

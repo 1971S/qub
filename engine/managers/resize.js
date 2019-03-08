@@ -1,3 +1,4 @@
+// Not in use, not adapted to work inside react. Do not use
 export class ResizeManager {
 
   constructor (app) {
@@ -14,7 +15,7 @@ export class ResizeManager {
 
   resize () {
 
-    var view = this.app.view;
+    let view = this.app.view;
     view.style.position = 'absolute';
     view.style.left = '50%';
     view.style.top = '50%';

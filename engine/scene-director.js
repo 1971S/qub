@@ -10,9 +10,13 @@ export class SceneDirector {
   // Setup is called as callback when the loader finishes loading all the textures in the statedirector
   setup () {
 
-    // Call createScene for each scene that we want in the game. 'True' binds that scene as initial
+    // Call createScene for each scene that we want in the game. 'True' binds that scene as the starting scene
     this.createScene('game', { player: [640, 192] }, true);
     this.createScene('end', { player: [640, 192] });
+
+    /////
+    // CREATESCENE WORKING AS INTENDED, GOTTA WORK ON CREATEOBJECT
+    /////
 
     // Initialize the player (static sprite) with an actortag and a controllertag
     this.createObject('game', 'nameoffolderinpublic/asset.png', [[320, 360]], 'bottom', 'player', 'platform');
@@ -23,8 +27,8 @@ export class SceneDirector {
     ], 'center', 'platform');
 
     // The asset2.json in the state-director generates a batch of textures in memory, which we can access to create an animation
-    const anim = this.createAnimation('presentation1', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
-    this.app.stage.scenes['presentation1'].actors['anim'] = anim;
+    const anim = this.createAnimation('end', 'Sprite-0001 ', [640, 200], 0.5, 0, 207);
+    this.app.stage.scenes['end'].actors['anim'] = anim;
     anim.play();
 
   }
@@ -120,6 +124,7 @@ export class SceneDirector {
   }
 
   createAnimation (dest, src, position, anchor, start, frames) {
+    
     var framesArr = [];
 
     for (var i = start; i < frames; i++) {
@@ -135,6 +140,7 @@ export class SceneDirector {
     this.app.stage.scenes[dest].addChild(anim);
 
     return anim;
+
   }
 
 }
