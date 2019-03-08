@@ -2,9 +2,8 @@
 
 Vanilla JS, PIXI-based 2D game engine, ready to be embedded as a React component.
 
-[alt text](https://github.com/jgp1971/qub/logo.png "Logo Title Text 1")
+![Logo](https://github.com/jgp1971/qub/blob/master/logo.png)
 
-/Users/
 ## Setup
 
 1. Run 'create-react-app' to create your client folder.
