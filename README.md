@@ -1,26 +1,60 @@
-# qub engine + qub
+<p align="center">
+  <img src="https://github.com/jgp1971/qub/blob/master/logo.png" width="500px" />
+</p>
 
-Vanilla JS, PIXI-based 2D game engine, ready to be embedded as a React component.
+> A PixiJS-powered, Vanilla JS 2D game engine, for creating interactive content exportable as React components.
 
-![Logo](https://github.com/jgp1971/qub/blob/master/logo.png)
+## Getting started
 
-## Setup
+1. Clone the repo
 
-1. Run 'create-react-app' to create your client folder.
-2. Copy the 'engine' folder from root inside the 'src' folder of your client.
-3. Import your Pixapp component into your default App component, and return it in its render.
-4. Place your assets inside a new folder in public.
-5. Follow the instructions in the StateDirector and SceneDirector to initialize states and scenes, and modify them directly to create your game logic.
+```
+$ git clone https://github.com/1971S/qub.git
+```
 
-## To do
+2. Install dependencies
 
-0. Standarized createObject function in SceneDirector that takes 'destination' string and 'options' object.
-1. StateDirector automatic load of all states in the state folder and addition of state functions.
-2. StateDirector automatic load of all assets in the assets folder.
-3. SceneDirector automatic load of external scene files from the scene folder.
-4. Correct and complete colliding system.
-5. Movable platform model.
-6. Particles.
-7. Adapt the managers to the react environment (event listeners not working, remnants from vanillajs)
-8. Input manager.
-9. JSON with ChangeScene conditions for each scene, with the events to listen to in each case, the scene to go and which objects to carry.
+```
+$ npm install
+```
+
+3. Create your react application
+
+```
+$ create-react-app my-game-app
+```
+
+4. Copy the 'engine' folder from qub's root to the 'src' folder of your react app.
+
+5. Import and use your Pixapp component into your default App component.
+
+6. Place your assets inside a new folder in public.
+
+7. Follow the instructions in the StateDirector and SceneDirector to initialize states and scenes, and modify them directly to create your game logic.
+
+## FAQ
+
+### Is there a roadmap of tasks to do next?
+
+1. Standarized createObject function in SceneDirector that takes 'destination' string and 'options' object.
+2. StateDirector automatic load of all states in the state folder and addition of state functions.
+3. StateDirector automatic load of all assets in the assets folder.
+4. SceneDirector automatic load of external scene files from the scene folder.
+5. Correct and complete colliding system.
+6. Movable platform model.
+7. Particles.
+8. Adapt the managers to the react environment (event listeners not working, remnants from vanillajs)
+9. Input manager.
+10. JSON with ChangeScene conditions for each scene, with the events to listen to in each case, the scene to go and which objects to carry.
+
+## Contributing
+
+Any contribution is welcome, just fork the repository and do your thing. Then submit a pull request pointing to this repo.
+
+## Authors
+
+- Julián González - [GitHub](https://github.com/1971S) [LinkedIn](https://www.linkedin.com/in/jgpicatoste/)
+
+## License
+
+This project is licensed under the MIT License.
